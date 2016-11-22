@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contour App</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+  
+<style>
+#videoElement {
+    width: 640px;
+    height: 480px;
+    background-color: #666;
+}
+</style>
+</head>
+  
+<body>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="{{ url_for('main') }}">Home</a>
+                    </li>
+                    <li role="presentation"><a href="#">Sign In</a>
+                    </li>
+                    <li role="presentation"><a href="showSignUp">Sign Up</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Contour App</h3>
+        </div>
+
+        <h4 id="currentView" name="currentView"></h4>
+
+		<div id="container">
+		    <video autoplay="true" id="videoElement"></video>
+		</div>
+
+		<script>
+		var video = document.querySelector("#videoElement");
+		 
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+		 
+		if (navigator.getUserMedia) {       
+		    navigator.getUserMedia({video: true}, handleVideo, videoError);
+		}
+		 
+		function handleVideo(stream) {
+		    video.src = window.URL.createObjectURL(stream);
+		}
+		 
+		function videoError(e) {
+		    // do something
+		}
+		</script>
+
+		<button id="snap" class="btn btn-success">Take Photo</button>
+		<canvas id="canvas" width="640" height="480" ></canvas>
+
+		<script type="text/javascript">
+
+		document.getElementById("canvas").style.visibility = "hidden";
+
+		var viewCount = 0;
+        var views = {{ views|safe }};
+        var totalViews = views.length;
+
+        document.getElementById("currentView").innerHTML = views[viewCount]
+
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+
+		document.getElementById("snap").addEventListener("click", function() {
+			context.drawImage(video, 0, 0, 640, 480);
+			if (viewCount == 0) {
+				html2canvas([canvas], {
+					onrendered: function(canvas) {
+						document.body.appendChild(canvas);
+						var data = canvas.toDataURL('image/png');
+						// AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
+						$.ajax({
+							url: '/uploadFront',
+							data: data,
+							type: 'GET'
+						});
+					}
+				});
+			}
+			if (viewCount == 1) {
+				document.getElementById("snap").disabled = true
+				document.getElementById("snap").innerHTML = "LOADING PICTURES..."
+				html2canvas([canvas], {
+					onrendered: function(canvas) {
+						document.body.appendChild(canvas);
+						var data = canvas.toDataURL('image/png');
+						// AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
+						$.ajax({
+							url: '/uploadSide',
+							data: data,
+							type: 'GET'
+						});
+					}
+				});
+				setTimeout(function(){ window.location.href='/contouring'; }, 1000);
+			}
+			viewCount++;
+			document.getElementById("currentView").innerHTML = views[1]
+		});
+		</script>
+	</div>
+</body>
+</html>

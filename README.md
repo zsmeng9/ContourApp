@@ -1,2 +1,2 @@
 # ContourApp
-contours wed app
+contours web app

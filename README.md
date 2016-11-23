@@ -3,14 +3,12 @@ contours web app
 
 Getting Started:
 
-cd ContourApp
+clone respository
 
-virtualenv app
-
-cd app
+cd ContourApp/app
 
 source bin/activate
 
 python contour.py
 
-The webapp should be up!
+The webapp should be up at localhost:5000

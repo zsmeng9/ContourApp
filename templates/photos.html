@@ -4,18 +4,22 @@
     <title>Contour App</title>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- 
+
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<!--     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
-  
+    <script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script> -->
+
+
+
 <style>
 #videoElement {
     width: 640px;
@@ -24,7 +28,7 @@
 }
 </style>
 </head>
-  
+
 <body>
     <div class="container">
         <div class="header">
@@ -42,24 +46,28 @@
         </div>
 
         <h4 id="currentView" name="currentView"></h4>
+        <div>
+            <div class="container">
 
-		<div id="container">
-		    <video autoplay="true" id="videoElement"></video>
-		</div>
+            </div>
+    		<div id="container">
+    		    <video autoplay="true" id="videoElement"></video>
+    		</div>
+        </div>
 
 		<script>
 		var video = document.querySelector("#videoElement");
-		 
+
 		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
-		 
-		if (navigator.getUserMedia) {       
+
+		if (navigator.getUserMedia) {
 		    navigator.getUserMedia({video: true}, handleVideo, videoError);
 		}
-		 
+
 		function handleVideo(stream) {
 		    video.src = window.URL.createObjectURL(stream);
 		}
-		 
+
 		function videoError(e) {
 		    // do something
 		}

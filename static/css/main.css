@@ -1,0 +1,20 @@
+.top-level-container {
+    width: 100%;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.column-view-div {
+    width: 100%;
+    position: fixed;
+    height: 500px;
+}
+
+.sample-image {
+    width: 40%;
+    height: 400px;
+    background: red;
+    margin: 0px;
+    float: left;
+    margin-right: 5px;
+}

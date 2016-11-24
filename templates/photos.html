@@ -13,24 +13,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
-
-<!--     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script> -->
-
-
-
-<style>
-#videoElement {
-    width: 640px;
-    height: 480px;
-    background-color: #666;
-}
-</style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container top-level-container">
         <div class="header">
             <nav>
                 <ul class="nav nav-pills pull-right">
@@ -46,14 +32,14 @@
         </div>
 
         <h4 id="currentView" name="currentView"></h4>
-        <div>
-            <div class="container">
-
+        <div class="column-view-div">
+            <div class="container sample-image">
             </div>
     		<div id="container">
     		    <video autoplay="true" id="videoElement"></video>
     		</div>
         </div>
+        <button id="snap" class="btn btn-success">Take Photo</button>
 
 		<script>
 		var video = document.querySelector("#videoElement");
@@ -73,7 +59,8 @@
 		}
 		</script>
 
-		<button id="snap" class="btn btn-success">Take Photo</button>
+        <div>
+        </div>
 		<canvas id="canvas" width="640" height="480" ></canvas>
 
 		<script type="text/javascript">

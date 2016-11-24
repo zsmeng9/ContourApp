@@ -1,12 +1,10 @@
 .top-level-container {
     width: 100%;
-    margin-right: 10%;
-    margin-left: 10%;
+    max-width: 100%;
 }
 
 .column-view-div {
     width: 100%;
-    position: fixed;
     height: 500px;
 }
 
@@ -17,4 +15,11 @@
     margin: 0px;
     float: left;
     margin-right: 5px;
+}
+
+/* must be id for some reason */
+#videoElement {
+    width: 640px;
+    height: 480px;
+    background-color: #666;
 }

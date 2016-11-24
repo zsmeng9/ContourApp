@@ -1,16 +1,14 @@
 # ContourApp
-contours web app
+Contour Web App
 
-Getting Started:
+Local Deployment:
 
-cd ContourApp
+1) clone respository
 
-virtualenv app
+2) cd ContourApp/app
 
-cd app
+3) source bin/activate
 
-source bin/activate
+4) run: python contour.py
 
-python contour.py
-
-The webapp should be up!
+The webapp should be up at localhost:5000

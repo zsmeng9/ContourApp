@@ -61,16 +61,16 @@ def contouring():
 
 @app.route("/measurements")
 def measurements():
-    query_string = str(request.query_string, 'utf-8').replace("%22", "\"")
+    query_string = str(request.query_string, 'utf-8').replace("%22", "\"").replace("%20", " ")
     deltas = json.loads(query_string)
 
-    cardTuple = deltas['CARD']
+    cardTuple = deltas['CARD Length']
     pixelsPerInch = cardCalibration(cardTuple)
     pixelsPerInchFront = pixelsPerInch[0]
     pixelsPerInchSide = pixelsPerInch[1]
 
     for contour in contours:
-        if contour != 'CARD':
+        if contour != 'CARD length':
             deltaTuple = deltas[contour]
             profile[contour] = algorithm(deltaTuple, pixelsPerInchFront,
                                          pixelsPerInchSide)

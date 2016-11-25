@@ -8,13 +8,22 @@
     height: 500px;
 }
 
-.sample-image {
-    width: 40%;
-    height: 400px;
-    background: red;
+#sample-image {
+    width: 48%;
+    height: 480px;
     margin: 0px;
     float: left;
     margin-right: 5px;
+    background-size: 600px;
+    background-repeat: no-repeat;
+}
+
+.front-image {
+    background-image: url(/static/images/front_full.jpg);
+}
+
+.side-image {
+    background-image: url(/static/images/side_full.jpg);
 }
 
 /* must be id for some reason */

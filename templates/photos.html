@@ -33,13 +33,14 @@
 
         <h4 id="currentView" name="currentView"></h4>
         <div class="column-view-div">
-            <div class="container sample-image">
+            <div id="sample-image" class="container">
             </div>
     		<div id="container">
     		    <video autoplay="true" id="videoElement"></video>
     		</div>
         </div>
         <button id="snap" class="btn btn-success">Take Photo</button>
+        <button id="snap2" class"btn btn-success">Increment ViewCount</button>
 
 		<script>
     		var video = document.querySelector("#videoElement");
@@ -75,15 +76,30 @@
     var views = {{ views|safe }};
     var totalViews = views.length;
 
+    // set the class for the original element
     document.getElementById("currentView").innerHTML = views[viewCount]
+    var imageClassName = (viewCount == 0) ? " front-image" : " side-image";
+    var d = document.getElementById("sample-image");
+    d.className += imageClassName;
+
+    // dummy testing button
+    document.getElementById("snap2").addEventListener("click", function() {
+        viewCount++;
+        var imageClassName = (viewCount == 0) ? " front-image" : " side-image";
+        var d = document.getElementById("sample-image");
+        d.className += imageClassName;
+        document.getElementById("currentView").innerHTML = views[1]
+    });
 
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
+    // stub for success handle
     function success(data) {
         console.log("success");
     }
 
+    // stub for error handling
     function error(request, status, error) {
         console.log("we failed");
         console.log(request);
@@ -133,7 +149,15 @@
             setTimeout(function(){ window.location.href='/contouring'; }, 1000);
         }
         viewCount++;
-        document.getElementById("currentView").innerHTML = views[1]
+        document.getElementById("currentView").innerHTML = views[1];
+        // change sample image
+        // TODO: super hacky...what we should really do is delete the old class and add the new class
+        // currently it just appends and class precedence provides the functionality
+        var imageClassName = (viewCount == 0) ? " front-image" : " side-image";
+        var d = document.getElementById("sample-image");
+        d.className += imageClassName;
+
+        // debug
         console.log(viewCount);
         console.log("completed!");
         debugger;

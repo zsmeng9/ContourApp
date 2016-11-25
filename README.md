@@ -4,7 +4,7 @@ Contour Web App
 Local Deployment via Terminal:
 
 1) clone respository by typing the following into terminal:
-git clone {repo}
+git clone git@github.com:zsmeng9/ContourApp.git
 
 2) Change directories into the application by typing:
 cd ContourApp/app

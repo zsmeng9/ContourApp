@@ -32,6 +32,13 @@
         </div>
 
         <h4 id="currentView" name="currentView"></h4>
+        <p>
+            Take a picture of your torso while holding a credit card flat against your chest,
+            like shown in the example below!
+        </p>
+        <p>
+            Press the "Take Photo" button below once you've got your pose right!
+        </p>
         <div class="column-view-div">
             <div id="sample-image" class="container">
             </div>
@@ -59,9 +66,6 @@
     		    // do something
     		}
 		</script>
-
-        <div>
-        </div>
 		<canvas id="canvas" width="640" height="480" ></canvas>
 
 
@@ -108,16 +112,13 @@
     }
 
     document.getElementById("snap").addEventListener("click", function() {
-        console.log("ooh we clicked snap");
         context.drawImage(video, 0, 0, 640, 480);
         if (viewCount == 0) {
-            console.log("looks like viewcount is zero");
             html2canvas([canvas], {
                 onrendered: function(canvas) {
                     document.body.appendChild(canvas);
                     var data = canvas.toDataURL('image/png');
                     // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
-                    console.log("uploading now...");
                     $.ajax({
                         url: '/uploadFront',
                         data: data,
@@ -129,7 +130,6 @@
             });
         }
         if (viewCount == 1) {
-            console.log("looks like viewcount is one");
             document.getElementById("snap").disabled = true
             document.getElementById("snap").innerHTML = "LOADING PICTURES..."
             html2canvas([canvas], {

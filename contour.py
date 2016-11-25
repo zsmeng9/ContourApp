@@ -6,7 +6,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-contours = ['CARD', 'CHEST', 'WAIST', 'NECK']
+contours = ['CARD Length', 'CHEST Width', 'WAIST Width', 'NECK Width']
 views = ['FRONT', 'SIDE']
 pi = 3.14
 

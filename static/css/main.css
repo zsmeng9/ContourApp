@@ -26,6 +26,42 @@
     background-image: url(/static/images/side_full.jpg);
 }
 
+/* no proper image */
+.measure-card-width {
+    background-image: url(/static/images/card_side.png);
+}
+
+/* no proper image */
+.measure-card-length {
+    background-image: url(/static/images/card_side.png);
+}
+
+.measure-chest-width {
+    background-image: url(/static/images/chest_front.png);
+}
+
+.measure-chest-length {
+    background-image: url(/static/images/chest_side.png);
+}
+
+/* no proper image */
+.measure-waist-width {
+    background-image: url(/static/images/waist_front.png);
+}
+
+/* no proper image */
+.measure-waist-length {
+    background-image: url(/static/images/waist_front.png);
+}
+
+.measure-neck-width {
+    background-image: url(/static/images/neck_front.png);
+}
+
+.measure-neck-length {
+    background-image: url(/static/images/neck_side.png);
+}
+
 /* must be id for some reason */
 #videoElement {
     width: 640px;

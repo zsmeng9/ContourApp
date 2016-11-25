@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
     <title>Contour App</title>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- 
+
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -23,7 +24,7 @@
         document.getElementById("testimg").src=fronttxt;
         // counter to track number of points
         var count = 0;
-        
+
         // counter to track number of contours per view
         var contourCount = 0;
         var contours = {{ contours|safe }};
@@ -104,15 +105,43 @@
             }
 
             document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
+            var imageClassName = "";
+            if (viewCount == 1) {
+                if (contourCount == 0) {
+                    imageClassName = " measure-card-width";
+                } else if (contourCount == 1) {
+                    imageClassName = " measure-chest-width";
+                } else if (contourCount == 2) {
+                    imageClassName = " measure-waist-width";
+                } else if (contourCount == 3) {
+                    imageClassName = " measure-neck-width";
+                }
+            } else if (viewCount == 0) {
+                if (contourCount == 0) {
+                    imageClassName = " measure-card-length";
+                } else if (contourCount == 1) {
+                    imageClassName = " measure-chest-length";
+                } else if (contourCount == 2) {
+                    imageClassName = " measure-waist-length";
+                } else if (contourCount == 3) {
+                    imageClassName = " measure-neck-length";
+/*                    document.getElementById("sample-image").className = "container";
+                    console.log("YO");*/
+                }
+            }
+
+            document.getElementById("sample-image").className = "container";
+            var d = document.getElementById("sample-image");
+            d.className += imageClassName;
         });
-    }); 
+    });
     </script>
- 
+
 </head>
 
 <body>
- 
-    <div class="container">
+
+    <div class="container top-level-container">
         <div class="header">
             <nav>
                 <ul class="nav nav-pills pull-right">
@@ -127,16 +156,28 @@
         </div>
 
         <h4 id="currentContour" name="currentContour"></h4>
-
-        <img id='testimg' alt="Test Image" />
+        <p>
+            Click twice around the outside of the specified body part to define the contour using two points.
+            You can click and drag the points to refine the contour definition!
+        </p>
+        <p>
+            After defining the two points, click the Next button to proceed!
+        </p>
+            <div class="column-view-div">
+                <div id="sample-image" class="container measure-card-length">
+                </div>
+                 <div id="container">
+                    <img id='testimg' alt="Test Image" />
+                </div>
+            </div>
 
         <button id='nextbutton' type="button" class="btn btn-success" style="visibility:hidden;" >Next</button>
 
         <p id="dict"></p>
 
         <div>
- 
+
     </div>
 </body>
- 
+
 </html>

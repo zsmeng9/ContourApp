@@ -42,77 +42,100 @@
         <button id="snap" class="btn btn-success">Take Photo</button>
 
 		<script>
-		var video = document.querySelector("#videoElement");
+    		var video = document.querySelector("#videoElement");
 
-		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+    		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 
-		if (navigator.getUserMedia) {
-		    navigator.getUserMedia({video: true}, handleVideo, videoError);
-		}
+    		if (navigator.getUserMedia) {
+    		    navigator.getUserMedia({video: true}, handleVideo, videoError);
+    		}
 
-		function handleVideo(stream) {
-		    video.src = window.URL.createObjectURL(stream);
-		}
+    		function handleVideo(stream) {
+    		    video.src = window.URL.createObjectURL(stream);
+    		}
 
-		function videoError(e) {
-		    // do something
-		}
+    		function videoError(e) {
+    		    // do something
+    		}
 		</script>
 
         <div>
         </div>
 		<canvas id="canvas" width="640" height="480" ></canvas>
 
-		<script type="text/javascript">
 
-		document.getElementById("canvas").style.visibility = "hidden";
-
-		var viewCount = 0;
-        var views = {{ views|safe }};
-        var totalViews = views.length;
-
-        document.getElementById("currentView").innerHTML = views[viewCount]
-
-		var canvas = document.getElementById("canvas");
-		var context = canvas.getContext("2d");
-
-		document.getElementById("snap").addEventListener("click", function() {
-			context.drawImage(video, 0, 0, 640, 480);
-			if (viewCount == 0) {
-				html2canvas([canvas], {
-					onrendered: function(canvas) {
-						document.body.appendChild(canvas);
-						var data = canvas.toDataURL('image/png');
-						// AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
-						$.ajax({
-							url: '/uploadFront',
-							data: data,
-							type: 'GET'
-						});
-					}
-				});
-			}
-			if (viewCount == 1) {
-				document.getElementById("snap").disabled = true
-				document.getElementById("snap").innerHTML = "LOADING PICTURES..."
-				html2canvas([canvas], {
-					onrendered: function(canvas) {
-						document.body.appendChild(canvas);
-						var data = canvas.toDataURL('image/png');
-						// AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
-						$.ajax({
-							url: '/uploadSide',
-							data: data,
-							type: 'GET'
-						});
-					}
-				});
-				setTimeout(function(){ window.location.href='/contouring'; }, 1000);
-			}
-			viewCount++;
-			document.getElementById("currentView").innerHTML = views[1]
-		});
-		</script>
 	</div>
 </body>
 </html>
+
+<script type="text/javascript">
+    document.getElementById("canvas").style.visibility = "hidden";
+
+    var viewCount = 0;
+    var views = {{ views|safe }};
+    var totalViews = views.length;
+
+    document.getElementById("currentView").innerHTML = views[viewCount]
+
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    function success(data) {
+        console.log("success");
+    }
+
+    function error(request, status, error) {
+        console.log("we failed");
+        console.log(request);
+        console.log(status);
+        console.log(error);
+    }
+
+    document.getElementById("snap").addEventListener("click", function() {
+        console.log("ooh we clicked snap");
+        context.drawImage(video, 0, 0, 640, 480);
+        if (viewCount == 0) {
+            console.log("looks like viewcount is zero");
+            html2canvas([canvas], {
+                onrendered: function(canvas) {
+                    document.body.appendChild(canvas);
+                    var data = canvas.toDataURL('image/png');
+                    // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
+                    console.log("uploading now...");
+                    $.ajax({
+                        url: '/uploadFront',
+                        data: data,
+                        type: 'GET',
+                        success: success,
+                        error: error
+                    });
+                }
+            });
+        }
+        if (viewCount == 1) {
+            console.log("looks like viewcount is one");
+            document.getElementById("snap").disabled = true
+            document.getElementById("snap").innerHTML = "LOADING PICTURES..."
+            html2canvas([canvas], {
+                onrendered: function(canvas) {
+                    document.body.appendChild(canvas);
+                    var data = canvas.toDataURL('image/png');
+                    // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
+                    $.ajax({
+                        url: '/uploadSide',
+                        data: data,
+                        type: 'GET',
+                        success: success,
+                        error: error
+                    });
+                }
+            });
+            setTimeout(function(){ window.location.href='/contouring'; }, 1000);
+        }
+        viewCount++;
+        document.getElementById("currentView").innerHTML = views[1]
+        console.log(viewCount);
+        console.log("completed!");
+        debugger;
+    });
+</script>

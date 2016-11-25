@@ -27,8 +27,9 @@ def photos():
 @app.route("/uploadFront")
 def uploadFront():
     query_string = request.query_string
-
+    print ("sup")
     f = open("static/front.txt", "wb")
+    print ("opening file")
     f.write(query_string)
     f.close()
 

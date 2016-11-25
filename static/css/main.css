@@ -28,7 +28,7 @@
 
 /* no proper image */
 .measure-card-width {
-    background-image: url(/static/images/card_side.png);
+    background-image: url(/static/images/card_front.png);
 }
 
 /* no proper image */
@@ -51,7 +51,7 @@
 
 /* no proper image */
 .measure-waist-length {
-    background-image: url(/static/images/waist_front.png);
+    background-image: url(/static/images/waist_side.png);
 }
 
 .measure-neck-width {

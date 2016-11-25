@@ -108,16 +108,6 @@
             var imageClassName = "";
             if (viewCount == 1) {
                 if (contourCount == 0) {
-                    imageClassName = " measure-card-width";
-                } else if (contourCount == 1) {
-                    imageClassName = " measure-chest-width";
-                } else if (contourCount == 2) {
-                    imageClassName = " measure-waist-width";
-                } else if (contourCount == 3) {
-                    imageClassName = " measure-neck-width";
-                }
-            } else if (viewCount == 0) {
-                if (contourCount == 0) {
                     imageClassName = " measure-card-length";
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-length";
@@ -125,6 +115,16 @@
                     imageClassName = " measure-waist-length";
                 } else if (contourCount == 3) {
                     imageClassName = " measure-neck-length";
+                }
+            } else if (viewCount == 0) {
+                if (contourCount == 0) {
+                    imageClassName = " measure-card-width";
+                } else if (contourCount == 1) {
+                    imageClassName = " measure-chest-width";
+                } else if (contourCount == 2) {
+                    imageClassName = " measure-waist-width";
+                } else if (contourCount == 3) {
+                    imageClassName = " measure-neck-width";
 /*                    document.getElementById("sample-image").className = "container";
                     console.log("YO");*/
                 }
@@ -164,7 +164,7 @@
             After defining the two points, click the Next button to proceed!
         </p>
             <div class="column-view-div">
-                <div id="sample-image" class="container measure-card-length">
+                <div id="sample-image" class="container measure-card-width">
                 </div>
                  <div id="container">
                     <img id='testimg' alt="Test Image" />

@@ -62,7 +62,7 @@ def contouring():
 
 @app.route("/measurements")
 def measurements():
-    query_string = str(request.query_string, 'utf-8').replace("%22", "\"").replace("%20", " ")
+    query_string = str(request.query_string).replace("%22", "\"").replace("%20", " ")
     deltas = json.loads(query_string)
 
     cardTuple = deltas['CARD Length']

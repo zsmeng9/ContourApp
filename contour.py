@@ -4,6 +4,9 @@ import os
 
 from flask import Flask, render_template, request
 
+from werkzeug.contrib.cache import SimpleCache
+
+cache = SimpleCache()
 
 app = Flask(__name__)
 
@@ -26,32 +29,41 @@ def photos():
 
 
 @app.route("/uploadFront")
-def uploadFront():
+#cacheFront
+def cacheFront():
     query_string = request.query_string
-    print ("sup")
-    f = open("static/front.txt", "wb")
-    print ("opening file")
-    f.write(query_string)
-    f.close()
+    # print ("sup")
+    # f = open("static/front.txt", "wb")
+    # print ("opening file")
+    # f.write(query_string)
+    # f.close()
+    cache.set('front', query_string)
 
     return render_template('photos.html')
 
 
 @app.route("/uploadSide")
-def uploadSide():
+#cacheSide
+def cacheSide():
     query_string = request.query_string
 
-    f = open("static/side.txt", "wb")
-    f.write(query_string)
-    f.close()
+    # f = open("static/side.txt", "wb")
+    # f.write(query_string)
+    # f.close()
+
+    cache.set('side', query_string)
 
     return render_template('photos.html')
 
 
 @app.route("/contouring")
 def contouring():
-    fronttxt = open("static/front.txt", "rb").read().decode("utf-8")
-    sidetxt = open("static/side.txt", "rb").read().decode("utf-8")
+    #read from cache
+    # fronttxt = open("static/front.txt", "rb").read().decode("utf-8")
+    # sidetxt = open("static/side.txt", "rb").read().decode("utf-8")
+    fronttxt = cache.get('front').decode("utf-8")
+    sidetxt = cache.get('side').decode("utf-8")
+
     return render_template(
         'contouring.html',
         fronttxt=json.dumps(fronttxt),
@@ -62,7 +74,8 @@ def contouring():
 
 @app.route("/measurements")
 def measurements():
-    query_string = str(request.query_string).replace("%22", "\"").replace("%20", " ")
+    query_string = str(request.query_string.decode("utf-8")).replace("%22", "\"").replace("%20", " ")
+    print (query_string)
     deltas = json.loads(query_string)
 
     cardTuple = deltas['CARD Length']
@@ -99,3 +112,4 @@ if __name__ == "__main__":
     # Bind to PORT if defined, otherwise default to 5000.
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+    # initialize cache

@@ -6,11 +6,10 @@ from flask import Flask, render_template, request
 
 from werkzeug.contrib.cache import SimpleCache
 
+app = Flask(__name__)
 cache = SimpleCache()
 
-app = Flask(__name__)
-
-contours = ['CARD Length', 'CHEST Width', 'WAIST Width', 'NECK Width']
+contours = ['PERSON Height', 'CHEST Width', 'WAIST Width', 'NECK Width']
 views = ['FRONT', 'SIDE']
 pi = 3.14
 
@@ -20,6 +19,12 @@ deltas = {}
 
 @app.route("/")
 def main():
+    return render_template('index.html')
+
+@app.route("/enterHeight", methods=['POST'])
+def enterHeight():
+    cache.set('height', request.form['userHeight'])
+    print (cache.get('height'))
     return render_template('index.html')
 
 
@@ -78,13 +83,13 @@ def measurements():
     print (query_string)
     deltas = json.loads(query_string)
 
-    cardTuple = deltas['CARD Length']
-    pixelsPerInch = cardCalibration(cardTuple)
+    cardTuple = deltas['PERSON Height']
+    pixelsPerInch = calibration(cardTuple)
     pixelsPerInchFront = pixelsPerInch[0]
     pixelsPerInchSide = pixelsPerInch[1]
 
     for contour in contours:
-        if contour != 'CARD length':
+        if contour != 'PERSON Height':
             deltaTuple = deltas[contour]
             profile[contour] = algorithm(deltaTuple, pixelsPerInchFront,
                                          pixelsPerInchSide)
@@ -101,9 +106,9 @@ def algorithm(deltaTuple, pixelsPerInchFront, pixelsPerInchSide):
     return p
 
 
-def cardCalibration(deltaTuple):
-    pixelsPerInchFront = deltaTuple[0] / 3.37
-    pixelsPerInchSide = deltaTuple[1] / 3.37
+def calibration(deltaTuple):
+    pixelsPerInchFront = deltaTuple[0] / float(cache.get('height'))
+    pixelsPerInchSide = deltaTuple[1] / float(cache.get('height'))
     pixelsPerInch = [pixelsPerInchFront, pixelsPerInchSide]
     return pixelsPerInch
 

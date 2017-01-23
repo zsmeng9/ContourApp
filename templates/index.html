@@ -33,7 +33,22 @@
             <h3 class="text-muted">Contour App</h3>
         </div>
 
-        <button type="button" class="btn btn-info"><a href="{{ url_for('photos') }}">Start!</a></button>
+        <br>
+
+        1. Enter Height and click Enter Height
+        <br>
+        2. Click Start! to begin Contouring
+
+        <br>
+
+        <form action="enterHeight" method="post">
+            Your Height: <input type="text" name="userHeight"><br>
+        <input type="submit" value="Enter Height" name="submitHeightButton">
+        </form>
+
+        <br>
+
+        <button type="button" class="btn btn-info" name="startButton"><a href="{{ url_for('photos') }}">Start!</a></button>
  
     </div>
 </body>

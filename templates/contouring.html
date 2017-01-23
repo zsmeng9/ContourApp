@@ -70,11 +70,16 @@
         dict[contours[contourCount].toString()] = [];
 
         $("#nextbutton").click(function () {
-            // get difference between xvalues of two points
-            var offset0 = $('#draggable0').offset().left;
-            var offset1 = $('#draggable1').offset().left;
+            // get straight line distabce between two points
+            var x1 = $('#draggable0').offset().left;
+            var x2 = $('#draggable1').offset().left;
 
-            measurement = Math.abs(offset0 - offset1);
+            var y1 = $('#draggable0').offset().top;
+            var y2 = $('#draggable1').offset().top;
+
+            var distance = Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+
+            measurement = Math.abs(distance);
             if (contours[contourCount.toString()] in dict) {
                 dict[contours[contourCount].toString()].push(measurement);
             } else {

@@ -14,8 +14,11 @@ contours = ['CARD Length', 'CHEST Width', 'WAIST Width', 'NECK Width']
 views = ['FRONT', 'SIDE']
 pi = 3.14
 
+
 profile = {}
 deltas = {}
+
+
 
 
 @app.route("/")
@@ -102,8 +105,8 @@ def algorithm(deltaTuple, pixelsPerInchFront, pixelsPerInchSide):
 
 
 def cardCalibration(deltaTuple):
-    pixelsPerInchFront = deltaTuple[0] / 3.37
-    pixelsPerInchSide = deltaTuple[1] / 3.37
+    pixelsPerInchFront = deltaTuple[0] / 3.984
+    pixelsPerInchSide = deltaTuple[1] / 3.984
     pixelsPerInch = [pixelsPerInchFront, pixelsPerInchSide]
     return pixelsPerInch
 

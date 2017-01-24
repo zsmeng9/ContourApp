@@ -74,6 +74,13 @@ def contouring():
         contours=json.dumps(contours), views=json.dumps(views)
     )
 
+@app.route("/contourupload")
+def contourupload():
+    return render_template(
+        'contourupload.html',
+        contours=json.dumps(contours), views=json.dumps(views)
+    )
+
 
 @app.route("/measurements")
 def measurements():

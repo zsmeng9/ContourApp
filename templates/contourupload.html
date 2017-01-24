@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Contour App</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/main.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var fronttxt = "static/front.png"
+        var sidetxt = "static/side.png"
+
+        document.getElementById("testimg").src=fronttxt;
+        // counter to track number of points
+        var count = 0;
+
+        // counter to track number of contours per view
+        var contourCount = 0;
+        var contours = {{ contours|safe }};
+        var totalContours = contours.length;
+
+        // counter to track views
+        var viewCount = 0;
+        var views = {{ views|safe }};
+        var totalViews = views.length;
+
+        var dict = {};
+        var measurementTuple = [];
+
+        document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
+
+            $("#testimg").click(function (ev) {
+            mouseX = ev.pageX;
+            mouseY = ev.pageY;
+
+            var color = '#ff0000';
+            var size = '10px';
+            if (count < 2) {
+                $("body").append(
+                    $("<div></div>")
+                        .attr('id', "draggable" + count)
+                        .attr('class', 'ui-draggable-handle')
+                        .css('position', 'absolute')
+                        .css('top', mouseY + 'px')
+                        .css('left', mouseX + 'px')
+                        .css('width', size)
+                        .css('height', size)
+                        .css('background-color', color)
+                );
+                measurementTuple.push(mouseX);
+                count++;
+            }
+            if (count > 1) {
+                document.getElementById("nextbutton").style.visibility = "visible";
+            }
+
+        $( ".ui-draggable-handle" ).draggable();
+        });
+
+        dict[contours[contourCount].toString()] = [];
+
+        $("#nextbutton").click(function () {
+            // get straight line distabce between two points
+            var x1 = $('#draggable0').offset().left;
+            var x2 = $('#draggable1').offset().left;
+
+            var y1 = $('#draggable0').offset().top;
+            var y2 = $('#draggable1').offset().top;
+
+            var distance = Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+
+            measurement = Math.abs(distance);
+            if (contours[contourCount.toString()] in dict) {
+                dict[contours[contourCount].toString()].push(measurement);
+            } else {
+                dict[contours[contourCount].toString()] = [];
+                dict[contours[contourCount].toString()].push(measurement);
+            }
+            document.getElementById("dict").innerHTML = JSON.stringify(dict);
+
+            // remove points and reset tuple and count
+            document.getElementById("draggable0").remove();
+            document.getElementById("draggable1").remove();
+            measurementTuple = [];
+            count = 0;
+
+            document.getElementById("nextbutton").style.visibility = "hidden";
+
+            contourCount++;
+
+            if (contourCount == totalContours) {
+                contourCount = 0;
+                viewCount++;
+                document.getElementById("testimg").src=sidetxt;
+            }
+
+            if (viewCount == totalViews) {
+                window.location.href='/measurements?' + JSON.stringify(dict)
+            }
+
+            document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
+            var imageClassName = "";
+            if (viewCount == 1) {
+                if (contourCount == 0) {
+                    imageClassName = " measure-card-length";
+                } else if (contourCount == 1) {
+                    imageClassName = " measure-chest-length";
+                } else if (contourCount == 2) {
+                    imageClassName = " measure-waist-length";
+                } else if (contourCount == 3) {
+                    imageClassName = " measure-neck-length";
+                }
+            } else if (viewCount == 0) {
+                if (contourCount == 0) {
+                    imageClassName = " measure-card-width";
+                } else if (contourCount == 1) {
+                    imageClassName = " measure-chest-width";
+                } else if (contourCount == 2) {
+                    imageClassName = " measure-waist-width";
+                } else if (contourCount == 3) {
+                    imageClassName = " measure-neck-width";
+                }
+            }
+
+            document.getElementById("sample-image").className = "container";
+            var d = document.getElementById("sample-image");
+            d.className += imageClassName;
+        });
+    });
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container top-level-container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="{{ url_for('main') }}">Home</a>
+                    <li role="presentation"><a href="#">Sign In</a>
+                    </li>
+                    <li role="presentation"><a href="showSignUp">Sign Up</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Contour App</h3>
+        </div>
+
+        <h4 id="currentContour" name="currentContour"></h4>
+        <p>
+            Click twice around the outside of the specified body part to define the contour using two points.
+            You can click and drag the points to refine the contour definition!
+        </p>
+        <p>
+            After defining the two points, click the Next button to proceed!
+        </p>
+            <div class="column-view-div">
+                <div id="sample-image" class="container measure-card-width">
+                </div>
+                 <div id="container" style="width: 560px; height:480px">
+                    <img id='testimg' alt="Test Image" width="100%"/>
+                </div>
+            </div>
+
+        <button id='nextbutton' type="button" class="btn btn-success" style="visibility:hidden;" >Next</button>
+
+        <p id="dict"></p>
+
+        <div>
+
+    </div>
+</body>
+
+</html>

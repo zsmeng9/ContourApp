@@ -1,3 +1,7 @@
+.contour-img {
+    cursor: crosshair;
+}
+
 .top-level-container {
     width: 100%;
     max-width: 100%;

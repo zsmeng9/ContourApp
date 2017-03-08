@@ -116,7 +116,7 @@
             html2canvas([canvas], {
                 onrendered: function(canvas) {
                     document.body.appendChild(canvas);
-                    var data = canvas.toDataURL('image/png');
+                    var data = canvas.toDataURL('image/png', 0.0);
                     // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
                     $.ajax({
                         url: '/uploadFront',
@@ -134,7 +134,7 @@
             html2canvas([canvas], {
                 onrendered: function(canvas) {
                     document.body.appendChild(canvas);
-                    var data = canvas.toDataURL('image/png');
+                    var data = canvas.toDataURL('image/png', 0.0);
                     // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
                     $.ajax({
                         url: '/uploadSide',
@@ -142,6 +142,8 @@
                         type: 'GET',
                         success: success,
                         error: error
+                    }).then(function() {
+                        console.log("upload complete");
                     });
                 }
             });
@@ -159,5 +161,5 @@
         // debug
         console.log(viewCount);
         console.log("completed!");
-    });
+    }); // take photo click response
 </script>

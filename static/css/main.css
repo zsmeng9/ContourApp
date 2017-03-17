@@ -14,12 +14,28 @@
     margin: 0px;
     float: left;
     margin-right: 5px;
-    background-size: 600px;
     background-repeat: no-repeat;
+}
+
+#video-container {
+    width: 48%;
+    display: inline-block;
+}
+
+/* must be id for some reason */
+#videoElement {
+    width: 640px;
+    height: 480px;
+    background-color: #666;
+}
+
+#testimg {
+    cursor: crosshair;
 }
 
 .front-image {
     background-image: url(/static/images/front_full.jpg);
+    background-size: 100%;
 }
 
 .side-image {
@@ -62,13 +78,3 @@
     background-image: url(/static/images/neck_side.png);
 }
 
-/* must be id for some reason */
-#videoElement {
-    width: 640px;
-    height: 480px;
-    background-color: #666;
-}
-
-#testimg {
-    cursor: crosshair;
-}

@@ -31,12 +31,19 @@
         </div>
 
         <h4 id="currentView" name="currentView"></h4>
-        <p>
-            Take a picture of your torso while holding a credit card flat against your chest,
-            like shown in the example below!
-        </p>
-        <p>
+        <p id="instruction-text">
+            Take a picture of your torso while holding a credit card flat against your chest, making sure it is parallel to your body
+            as shown in the example below! 
+
+            <br />
+            Extend your arms out at a 45 degree angle.
+
+            <br />
+            Make sure your arms do not block the edges of your chest or waist.
+            <br />
+
             Press the "Take Photo" button below once you've got your pose right!
+
         </p>
         <div class="column-view-div">
             <div id="sample-image" class="container">
@@ -84,7 +91,7 @@
     var imageClassName = (viewCount == 0) ? " front-image" : " side-image";
     var d = document.getElementById("sample-image");
     d.className += imageClassName;
-
+    
     // dummy testing button
     document.getElementById("snap2").addEventListener("click", function() {
         viewCount++;
@@ -157,6 +164,8 @@
         var imageClassName = (viewCount == 0) ? " front-image" : " side-image";
         var d = document.getElementById("sample-image");
         d.className += imageClassName;
+        var sideInstructionalText = "Take a picture of your side profile while holding a credit card perpendicular to your waist, like shown in the example below! <br /> Press the 'Take Photo' button below once you've got your pose right!";
+        document.getElementById("instruction-text").innerHTML = sideInstructionalText;
 
         // debug
         console.log(viewCount);

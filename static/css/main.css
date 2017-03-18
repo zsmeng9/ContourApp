@@ -1,3 +1,21 @@
+/* spacing for header */
+.header {
+    margin-bottom: 30px;
+}
+
+/* center the page heading */
+#currentView {
+    text-align: center;
+}
+
+#currentContour {
+    text-align: center;
+}
+
+#instruction-text {
+    text-align: center;
+}
+
 .top-level-container {
     width: 100%;
     max-width: 100%;

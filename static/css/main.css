@@ -48,6 +48,11 @@
     background-color: #666;
 }
 
+#contour-image-container {
+    width: 48%;
+    display: inline-block;
+}
+
 #testimg {
     cursor: crosshair;
 }

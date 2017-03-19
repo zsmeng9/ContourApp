@@ -1,0 +1,356 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: store_sizes; Type: TABLE; Schema: public; Owner: allanmeng
+--
+
+CREATE TABLE store_sizes (
+    id integer NOT NULL,
+    store_id integer,
+    size character(4),
+    neckmin real,
+    neckmax real,
+    chestmin real,
+    chestmax real,
+    waistmin real,
+    waistmax real
+);
+
+
+ALTER TABLE store_sizes OWNER TO allanmeng;
+
+--
+-- Name: store_sizes_id_seq; Type: SEQUENCE; Schema: public; Owner: allanmeng
+--
+
+CREATE SEQUENCE store_sizes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE store_sizes_id_seq OWNER TO allanmeng;
+
+--
+-- Name: store_sizes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: allanmeng
+--
+
+ALTER SEQUENCE store_sizes_id_seq OWNED BY store_sizes.id;
+
+
+--
+-- Name: stores; Type: TABLE; Schema: public; Owner: allanmeng
+--
+
+CREATE TABLE stores (
+    id integer NOT NULL,
+    name text
+);
+
+
+ALTER TABLE stores OWNER TO allanmeng;
+
+--
+-- Name: stores_id_seq; Type: SEQUENCE; Schema: public; Owner: allanmeng
+--
+
+CREATE SEQUENCE stores_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE stores_id_seq OWNER TO allanmeng;
+
+--
+-- Name: stores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: allanmeng
+--
+
+ALTER SEQUENCE stores_id_seq OWNED BY stores.id;
+
+
+--
+-- Name: user_sizes; Type: TABLE; Schema: public; Owner: allanmeng
+--
+
+CREATE TABLE user_sizes (
+    id integer NOT NULL,
+    user_id integer,
+    neck real,
+    chest real,
+    waist real,
+    "timestamp" timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE user_sizes OWNER TO allanmeng;
+
+--
+-- Name: user_sizes_id_seq; Type: SEQUENCE; Schema: public; Owner: allanmeng
+--
+
+CREATE SEQUENCE user_sizes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_sizes_id_seq OWNER TO allanmeng;
+
+--
+-- Name: user_sizes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: allanmeng
+--
+
+ALTER SEQUENCE user_sizes_id_seq OWNED BY user_sizes.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: allanmeng
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    username character(50) NOT NULL,
+    password character(50) NOT NULL
+);
+
+
+ALTER TABLE users OWNER TO allanmeng;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: allanmeng
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE users_id_seq OWNER TO allanmeng;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: allanmeng
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: store_sizes id; Type: DEFAULT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY store_sizes ALTER COLUMN id SET DEFAULT nextval('store_sizes_id_seq'::regclass);
+
+
+--
+-- Name: stores id; Type: DEFAULT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY stores ALTER COLUMN id SET DEFAULT nextval('stores_id_seq'::regclass);
+
+
+--
+-- Name: user_sizes id; Type: DEFAULT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY user_sizes ALTER COLUMN id SET DEFAULT nextval('user_sizes_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: store_sizes; Type: TABLE DATA; Schema: public; Owner: allanmeng
+--
+
+COPY store_sizes (id, store_id, size, neckmin, neckmax, chestmin, chestmax, waistmin, waistmax) FROM stdin;
+1	1	XS  	13	13.5	32	34	26	28
+2	1	S   	14	14.5	35	37	29	31
+3	1	M   	15	15.5	38	40	32	34
+4	1	L   	16	16.5	41	43	35	37
+5	1	XL  	17	17.5	44	46	38	40
+6	1	XXL 	18	18.5	47	49	41	43
+\.
+
+
+--
+-- Name: store_sizes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: allanmeng
+--
+
+SELECT pg_catalog.setval('store_sizes_id_seq', 1, false);
+
+
+--
+-- Data for Name: stores; Type: TABLE DATA; Schema: public; Owner: allanmeng
+--
+
+COPY stores (id, name) FROM stdin;
+1	jcrew
+\.
+
+
+--
+-- Name: stores_id_seq; Type: SEQUENCE SET; Schema: public; Owner: allanmeng
+--
+
+SELECT pg_catalog.setval('stores_id_seq', 1, true);
+
+
+--
+-- Data for Name: user_sizes; Type: TABLE DATA; Schema: public; Owner: allanmeng
+--
+
+COPY user_sizes (id, user_id, neck, chest, waist, "timestamp") FROM stdin;
+1	3	18.4406509	24.0102367	17.7413654	2017-03-03 11:43:01.69298
+2	6	14.8488674	18.5968723	13.2984409	2017-03-03 11:46:59.930699
+3	7	13.8495407	32.489872	26.29636	2017-03-08 14:06:11.478036
+4	4	6.2797184	11.895586	6.88622141	2017-03-08 18:30:10.104594
+5	4	15.7746096	40.5493851	35.9058456	2017-03-10 10:13:20.880973
+6	5	16.3122368	38.1199532	36.4742928	2017-03-15 13:26:28.080837
+7	5	14.7906351	35.3304138	33.9111404	2017-03-15 13:28:01.826741
+8	5	15.5344105	36.1925354	35.4304886	2017-03-15 13:29:35.564613
+9	12	13.2103233	31.7460022	25.9714584	2017-03-15 13:39:23.246922
+10	16	16.6934814	32.1371727	27.265564	2017-03-15 17:41:46.564492
+11	17	18.0170288	42.5039978	39.0141525	2017-03-16 17:49:38.508628
+12	12	14.8863268	14.420783	19.542099	2017-03-19 12:47:51.235405
+13	12	10.503294	6.64792681	11.4434547	2017-03-19 13:02:33.265531
+\.
+
+
+--
+-- Name: user_sizes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: allanmeng
+--
+
+SELECT pg_catalog.setval('user_sizes_id_seq', 13, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: allanmeng
+--
+
+COPY users (id, username, password) FROM stdin;
+1	zsmeng9@gmail.com                                 	contours                                          
+2	{asdf}                                            	{asdf}                                            
+3	asdf                                              	asdf                                              
+4	allan                                             	meng                                              
+5	hello                                             	world                                             
+6	mew                                               	mew                                               
+7	lala                                              	land                                              
+8	hello                                             	all                                               
+10	vishal                                            	1234                                              
+11	vishal                                            	babu                                              
+12	electricmoose                                     	alpine                                            
+13	contourtest                                       	contourtest                                       
+14	                                                  	                                                  
+15	contourtest                                       	contourtest                                       
+16	test                                              	test                                              
+17	jefferson                                         	jefferson                                         
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: allanmeng
+--
+
+SELECT pg_catalog.setval('users_id_seq', 17, true);
+
+
+--
+-- Name: store_sizes store_sizes_pkey; Type: CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY store_sizes
+    ADD CONSTRAINT store_sizes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: stores stores_pkey; Type: CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY stores
+    ADD CONSTRAINT stores_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_sizes user_sizes_pkey; Type: CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY user_sizes
+    ADD CONSTRAINT user_sizes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: store_sizes store_sizes_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY store_sizes
+    ADD CONSTRAINT store_sizes_store_id_fkey FOREIGN KEY (store_id) REFERENCES stores(id);
+
+
+--
+-- Name: user_sizes user_sizes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY user_sizes
+    ADD CONSTRAINT user_sizes_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -1,4 +1,4 @@
-#!/Users/allanmeng/dev/ContourApp/app/bin/python
+#!/Users/allanmeng/dev/ContourApp/bin/python
 
 import sys
 import getopt

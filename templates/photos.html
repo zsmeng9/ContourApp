@@ -52,7 +52,6 @@
     		    <video autoplay="true" id="videoElement"></video>
     		</div>
             <button id="snap" class="btn btn-success">Take Photo</button>
-            <button id="snap2" class"btn btn-success">Increment ViewCount</button>
         </div>
 
 		<script>
@@ -91,15 +90,6 @@
     var imageClassName = (viewCount == 0) ? " front-image" : " side-image";
     var d = document.getElementById("sample-image");
     d.className += imageClassName;
-    
-    // dummy testing button
-    document.getElementById("snap2").addEventListener("click", function() {
-        viewCount++;
-        var imageClassName = (viewCount == 0) ? " front-image" : " side-image";
-        var d = document.getElementById("sample-image");
-        d.className += imageClassName;
-        document.getElementById("currentView").innerHTML = views[1]
-    });
 
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");

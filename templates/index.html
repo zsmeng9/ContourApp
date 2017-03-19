@@ -32,6 +32,22 @@
             </nav>
             <h3 class="text-muted">Contour App</h3>
         </div>
+ 
+        <p>
+            Create an account
+        </p>
+        <form action="/addUser" method="get">
+            <input type="text" placeholder="Username" name="username" value="{{
+              request.form.username }}">
+             <input type="password" placeholder="Password" name="password" value="{{
+              request.form.password }}">
+            <input class="btn btn-default" type="submit" value="Create Account">
+        </form>
+
+        <p>
+            or click start if you have one!
+        </p>
+
         <button type="button" class="btn btn-info" onclick="window.location.href='{{ url_for('photos') }}'">Start!</button>
     </div>
 </body>

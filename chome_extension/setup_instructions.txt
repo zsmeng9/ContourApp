@@ -1,0 +1,9 @@
+OSX INSTRUCTIONS
+
+1. Download and Install XAMPP: https://www.apachefriends.org/index.html
+2. Move the contourdb folder to Applications/XAMPP/xamppfiles/htdocs
+3. Start manager-osx (should be in Applications/XAMPP)
+4. Go to Manager Servers tab and start Apache Web Server
+5. Open Chrome and go to chrome://extensions, ensure Developer Mode is checked
+6. Click Load Unpacked Extension and select the chrome_extension folder
+7. Go to https://www.jcrew.com/ca/p/mens_category/dressshirts/ludlowdress/ludlow-shirt-in-tattersall-oxford/F8188 or similar

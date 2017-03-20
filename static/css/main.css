@@ -42,10 +42,12 @@
 }
 
 /* must be id for some reason */
+/* flipped because for some reason it is flipped the wrong way by default */
 #videoElement {
     width: 640px;
     height: 480px;
     background-color: #666;
+    transform: rotateY(180deg);
 }
 
 #contour-image-container {

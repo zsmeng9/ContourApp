@@ -43,19 +43,23 @@
             mouseX = ev.pageX;
             mouseY = ev.pageY;
 
-            var color = '#ff0000';
-            var size = '10px';
+            var markerPath = "url(/static/images/maps-marker.png)";
+            var size = '25px';
             if (count < 2) {
+                // top and left are shifted relative to the size of the
+                // marker size in order to align the click with the bottom of the
+                // pointer
                 $("body").append(
                     $("<div></div>")
                         .attr('id', "draggable" + count)
                         .attr('class', 'ui-draggable-handle')
                         .css('position', 'absolute')
-                        .css('top', mouseY + 'px')
-                        .css('left', mouseX + 'px')
+                        .css('top', mouseY-25 + 'px')
+                        .css('left', mouseX-12.5 + 'px')
                         .css('width', size)
                         .css('height', size)
-                        .css('background-color', color)
+                        .css('background-image', markerPath)
+                        .css('background-size', '100%')
                 );
                 measurementTuple.push(mouseX);
                 count++;
@@ -71,11 +75,12 @@
 
         $("#nextbutton").click(function () {
             // get straight line distabce between two points
-            var x1 = $('#draggable0').offset().left;
-            var x2 = $('#draggable1').offset().left;
+            // shift measurements to where the marker points as well
+            var x1 = $('#draggable0').offset().left-12.5;
+            var x2 = $('#draggable1').offset().left-12.5;
 
-            var y1 = $('#draggable0').offset().top;
-            var y2 = $('#draggable1').offset().top;
+            var y1 = $('#draggable0').offset().top-25;
+            var y2 = $('#draggable1').offset().top-25;
 
             var distance = Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
 
@@ -110,31 +115,43 @@
 
             document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
             var imageClassName = "";
+            var instructionalText = "";
+
             if (viewCount == 1) {
                 if (contourCount == 0) {
                     imageClassName = " measure-card-length";
+                    instructionalText = "Click on the edges of the credit card's length twice to create two markers! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-length";
+                    instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 } else if (contourCount == 2) {
                     imageClassName = " measure-waist-length";
+                    instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 } else if (contourCount == 3) {
                     imageClassName = " measure-neck-length";
+                    instructionalText = "Click the contour of the body at the neck- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 }
             } else if (viewCount == 0) {
                 if (contourCount == 0) {
                     imageClassName = " measure-card-width";
+                    instructionalText = "Click on the edges of the credit card's width twice to create two markers! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-width";
+                    instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 } else if (contourCount == 2) {
                     imageClassName = " measure-waist-width";
+                    instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 } else if (contourCount == 3) {
                     imageClassName = " measure-neck-width";
+                    instructionalText = "Click the contour of the body at the neck- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 }
             }
 
             document.getElementById("sample-image").className = "container";
             var d = document.getElementById("sample-image");
             d.className += imageClassName;
+            instructionalText += "<br /> Press the next button that appears afterwards to proceed!";
+            document.getElementById("instruction-text").innerHTML = instructionalText;
         });
     });
     </script>
@@ -159,12 +176,13 @@
 
         <h4 id="currentContour" name="currentContour"></h4>
         <p id="instruction-text">
-            Click twice around the outside of the specified body part to define the contour using two points.
-            You can click and drag the points to refine the contour definition!
-
+            Click on the edges of the credit card's length twice to create two markers!
             <br />
-
-            After defining the two points, click the Next button to proceed!
+            Markers can be dragged once they have been placed.
+            <br />
+            Try zooming in on the webpage if you need to get a better look!
+            <br />
+            Press the next button that appears afterwards to proceed!
         </p>
             <div class="column-view-div">
                 <div id="sample-image" class="container measure-card-width">
@@ -175,7 +193,7 @@
             </div>
 
         <button id='nextbutton' type="button" class="btn btn-success" style="visibility:hidden;" >Next</button>
-
+        <button id='test'>suh</button>
         <p id="dict"></p>
 
         <div>

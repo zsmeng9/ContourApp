@@ -44,7 +44,8 @@
             mouseY = ev.pageY;
 
             var markerPath = "url(/static/images/maps-marker.png)";
-            var size = '25px';
+            var width = '25px';
+            var height = '37px';
             if (count < 2) {
                 // top and left are shifted relative to the size of the
                 // marker size in order to align the click with the bottom of the
@@ -54,10 +55,10 @@
                         .attr('id', "draggable" + count)
                         .attr('class', 'ui-draggable-handle')
                         .css('position', 'absolute')
-                        .css('top', mouseY-25 + 'px')
+                        .css('top', mouseY-37 + 'px')
                         .css('left', mouseX-12.5 + 'px')
-                        .css('width', size)
-                        .css('height', size)
+                        .css('width', width)
+                        .css('height', height)
                         .css('background-image', markerPath)
                         .css('background-size', '100%')
                 );
@@ -79,8 +80,8 @@
             var x1 = $('#draggable0').offset().left-12.5;
             var x2 = $('#draggable1').offset().left-12.5;
 
-            var y1 = $('#draggable0').offset().top-25;
-            var y2 = $('#draggable1').offset().top-25;
+            var y1 = $('#draggable0').offset().top-37;
+            var y2 = $('#draggable1').offset().top-37;
 
             var distance = Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
 
@@ -193,7 +194,6 @@
             </div>
 
         <button id='nextbutton' type="button" class="btn btn-success" style="visibility:hidden;" >Next</button>
-        <button id='test'>suh</button>
         <p id="dict"></p>
 
         <div>

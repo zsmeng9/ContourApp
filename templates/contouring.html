@@ -119,9 +119,11 @@
             var instructionalText = "";
 
             if (viewCount == 1) {
+                /* Side */
                 if (contourCount == 0) {
+                /* This variable name is decieving. It is really measuring the hypotenuse of the card but from the side view */                   
                     imageClassName = " measure-card-length";
-                    instructionalText = "Click on the edges of the credit card's length twice to create two markers! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click on the edges of the credit card's length twice to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-length";
                     instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
@@ -133,9 +135,11 @@
                     instructionalText = "Click the contour of the body at the neck- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 }
             } else if (viewCount == 0) {
+                /* Front */
                 if (contourCount == 0) {
+                /* This variable name is decieving. It is really measuring the hypotenuse but from the front view */                    
                     imageClassName = " measure-card-width";
-                    instructionalText = "Click on the edges of the credit card's width twice to create two markers! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click on the edges of the credit card's width twice to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-width";
                     instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";

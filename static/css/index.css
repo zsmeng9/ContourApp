@@ -1,0 +1,37 @@
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+}
+
+#parent-container {
+	height: 100%;
+}
+
+#header-element {
+	margin-bottom: 40px;
+}
+
+#login-section {
+	width: 50%;
+	float: left;
+}
+
+#login-form {
+	margin-bottom: 20px;
+}
+
+#username-input {
+	margin-bottom: 5px;
+}
+
+#password-input {
+	margin-bottom: 10px;
+}
+
+#video-section {
+	width: 50%;
+	float: left;
+}

@@ -32,7 +32,7 @@
     margin: 0px;
     float: left;
     margin-right: 5px;
-    background-size: 100%;
+    background-size: 112%;
     background-repeat: no-repeat;
 }
 
@@ -87,7 +87,7 @@
     margin: 0px;
     float: left;
     margin-right: 5px;
-    background-size: 100%;
+    background-size: 112%;
     background-repeat: no-repeat;
 }
 
@@ -115,52 +115,52 @@
 }
 
 .front-image {
-    background-image: url(/static/images/front_full.jpg);
+    background-image: url(/static/images/front_full.png);
 }
 
 .side-image {
-    background-image: url(/static/images/side_full.jpg);
+    background-image: url(/static/images/side_full.png);
 }
 
 /* no proper image */
 .measure-card-width {
-    background-image: url(/static/images/card_front.png);
+    background-image: url(/static/images/frontcard.png);
 }
 
 /* no proper image */
 .measure-card-length {
-    background-image: url(/static/images/card_side.png);
+    background-image: url(/static/images/sidecard.png);
 }
 
 .measure-chest-width {
-    background-image: url(/static/images/chest_front.png);
+    background-image: url(/static/images/frontchest.png);
 }
 
 .measure-chest-length {
-    background-image: url(/static/images/chest_side.png);
+    background-image: url(/static/images/sidechest.png);
 }
 
 /* no proper image */
 .measure-waist-width {
-    background-image: url(/static/images/waist_front.png);
+    background-image: url(/static/images/frontwaist.png);
 }
 
 /* no proper image */
 .measure-waist-length {
-    background-image: url(/static/images/waist_side.png);
+    background-image: url(/static/images/sidewaist.png);
 }
 
 .measure-neck-width {
-    background-image: url(/static/images/neck_front.png);
+    background-image: url(/static/images/frontneck.png);
 }
 
 .measure-neck-length {
-    background-image: url(/static/images/neck_side.png);
+    background-image: url(/static/images/sideneck.png);
 }
 
-.ui-draggable-handle {
+/*.ui-draggable-handle {
     background-image: url(/static/images/contour_arrow.png);
-}
+}*/
 
 /* must be id for some reason */
 #videoElement {

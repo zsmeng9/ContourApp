@@ -122,6 +122,7 @@
             if (viewCount == 1) {
                 /* Side */
                 if (contourCount == 0) {
+                    document.getElementById("sample-image").style.backgroundSize = "123%";
                 /* This variable name is decieving. It is really measuring the hypotenuse of the card but from the side view */                   
                     imageClassName = " measure-card-length";
                     instructionalText = "Click on any two opposite corners of the credit card to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed.";
@@ -141,7 +142,6 @@
                     imageClassName = " measure-neck-length";
                     instructionalText = "Click the contour of the body at the neck. <br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "8 / 8";
-
                 }
             } else if (viewCount == 0) {
                 /* Front */
@@ -159,10 +159,12 @@
                     instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! Note that the waist is 1 inch above the belly button.<br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "3 / 8";
                 } else if (contourCount == 3) {
+                    // these sample images are smaller for some reason
+                    // so we need to go up to 118%
+                    document.getElementById("sample-image").style.backgroundSize = "114%";
                     imageClassName = " measure-neck-width";
                     instructionalText = "Click the contour of the body at the neck. <br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "4 / 8";
-
                 }
             }
 

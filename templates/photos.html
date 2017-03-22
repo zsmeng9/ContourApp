@@ -125,6 +125,11 @@
     var d = document.getElementById("sample-image");
     d.className += imageClassName;
 
+    // chest image is too small
+    document.getElementById("sample-image").style.backgroundSize = "112%";
+    document.getElementById("modal-sample-image").style.backgroundSize = "112%";
+
+
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
     // flip context because the video is by default flipped backwards
@@ -175,6 +180,11 @@
         if (viewCount == 0) {
             // update progress bar
             document.getElementById("progress-bar").innerHTML = "2 / 2";
+
+            // reset background size style
+            document.getElementById("sample-image").style.backgroundSize = "";
+            document.getElementById("modal-sample-image").style.backgroundSize = "";
+
             var data = canvas.toDataURL('image/png', 0.0);
             $.ajax({
                 url: '/uploadFront',

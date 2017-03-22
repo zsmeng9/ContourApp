@@ -234,48 +234,62 @@
     }; // take photo click response
 
 
-    // When the user clicks on the button, open the modal 
+    // When the user clicks on the button, open the modal
+    // add timeout delay 
     btn.onclick = function() {
-        // add correct sample image to modal
-        var modalImageClassName = (viewCount == 0) ? " front-image" : " side-image";
-        document.getElementById("modal-sample-image").className += modalImageClassName;
-        
-        // negative width to flip the image the right way
-        context.drawImage(video, 0, 0, -640, 480);
-        html2canvas([canvas], {
-            onrendered: function(canvas) {
-                // render to modal
-                var previewImage = document.getElementById("preview-image");
-                var domPreviewImage = previewImage.appendChild(canvas);
-                domPreviewImage.className = "modal-image-container";
-                // add some classes, do some styling
+        var takePhotoButton = document.getElementById("snap");
+        takePhotoButton.innerHTML = "3";
+        setTimeout(function() {
+             // add correct sample image to modal
+            var modalImageClassName = (viewCount == 0) ? " front-image" : " side-image";
+            document.getElementById("modal-sample-image").className += modalImageClassName;
+            
+            // "take the image"
+            // negative width to flip the image the right way
+            context.drawImage(video, 0, 0, -640, 480);
+            html2canvas([canvas], {
+                onrendered: function(canvas) {
+                    // render to modal
+                    var previewImage = document.getElementById("preview-image");
+                    var domPreviewImage = previewImage.appendChild(canvas);
+                    domPreviewImage.className = "modal-image-container";
+                    // add some classes, do some styling
 
-                document.getElementById("retake-photo").onclick = function () {
-                        // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect
-                        previewImage.removeChild(previewImage.childNodes[1]);
-                        
-                        // do nothing and close the modal
-                        modal.style.display = "none";
-                    };
+                    document.getElementById("retake-photo").onclick = function () {
+                            // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect
+                            previewImage.removeChild(previewImage.childNodes[1]);
+                            
+                            // do nothing and close the modal
+                            modal.style.display = "none";
+                        };
 
-                document.getElementById("upload-photo").onclick = function() {
-                        // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect
-                        previewImage.removeChild(previewImage.childNodes[1]);
-                        
-                        // close the modal
-                        modal.style.display = "none";
+                    document.getElementById("upload-photo").onclick = function() {
+                            // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect
+                            previewImage.removeChild(previewImage.childNodes[1]);
+                            
+                            // close the modal
+                            modal.style.display = "none";
 
-                        // closure to capture local canvas state
-                        var myClosure = function() {
-                            return uploadPhoto(canvas);
-                        }
-                        myClosure();
-                    };
-                
-                // set everything up and then display modal
-                modal.style.display = "block";
-            }
-        });
-    }
+                            // closure to capture local canvas state
+                            var myClosure = function() {
+                                return uploadPhoto(canvas);
+                            }
+                            myClosure();
+                        };
+                    
+                    // set everything up and then display modal
+                    modal.style.display = "block";
+                }
+            });
+            
+            takePhotoButton.innerHTML = "Take Photo";
+        }, 3000) // timeout
+
+        setTimeout(function() { takePhotoButton.innerHTML = "2"; }, 1000);
+        setTimeout(function() { takePhotoButton.innerHTML = "1"; }, 2000);
+
+
+    };
+
 
 </script>

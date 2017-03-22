@@ -36,16 +36,6 @@
     background-repeat: no-repeat;
 }
 
-#modal-sample-image {
-    width: 48%;
-    height: 360px;
-    margin: 0px;
-    float: left;
-    margin-right: 5px;
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
 #video-container {
     width: 48%;
     display: inline-block;
@@ -58,6 +48,22 @@
     height: 480px;
     background-color: #666;
     transform: rotateY(180deg);
+}
+
+/* take photo button fixed size */
+#snap {
+    width: 96px;
+    height: 34px;
+}
+
+#modal-sample-image {
+    width: 48%;
+    height: 360px;
+    margin: 0px;
+    float: left;
+    margin-right: 5px;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .modal-image-container {

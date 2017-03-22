@@ -104,7 +104,9 @@ def addUser():
     db.session.add(newUser)
     db.session.commit()
 
-    return render_template('index.html')
+    return render_template(
+        'newuser.html',
+        username=json.dumps(username))
 
 @app.route("/photos")
 @requires_auth

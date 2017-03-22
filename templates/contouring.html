@@ -124,22 +124,22 @@
                 if (contourCount == 0) {
                 /* This variable name is decieving. It is really measuring the hypotenuse of the card but from the side view */                   
                     imageClassName = " measure-card-length";
-                    instructionalText = "Click on the edges of the credit card's length twice to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click on any two opposite corners of the credit card to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "5 / 8";
 
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-length";
-                    instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! Note that your chest is where your nipple line is. <br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "6 / 8";
 
                 } else if (contourCount == 2) {
                     imageClassName = " measure-waist-length";
-                    instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! Note that the waist is 1 inch above the belly button.<br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "7 / 8";
 
                 } else if (contourCount == 3) {
                     imageClassName = " measure-neck-length";
-                    instructionalText = "Click the contour of the body at the neck- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click the contour of the body at the neck. <br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "8 / 8";
 
                 }
@@ -148,19 +148,19 @@
                 if (contourCount == 0) {
                 /* This variable name is decieving. It is really measuring the hypotenuse but from the front view */                    
                     imageClassName = " measure-card-width";
-                    instructionalText = "Click on the edges of the credit card's width twice to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click on any two opposite corners of the credit card to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed.";
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-width";
-                    instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! Note that your chest is where your nipple line is.<br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "2 / 8";
 
                 } else if (contourCount == 2) {
                     imageClassName = " measure-waist-width";
-                    instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! Note that the waist is 1 inch above the belly button.<br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "3 / 8";
                 } else if (contourCount == 3) {
                     imageClassName = " measure-neck-width";
-                    instructionalText = "Click the contour of the body at the neck- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    instructionalText = "Click the contour of the body at the neck. <br /> Markers can be dragged once they have been placed.";
                     progressBar.innerHTML = "4 / 8";
 
                 }
@@ -178,7 +178,6 @@
 </head>
 
 <body>
-
     <div class="container top-level-container">
         <div class="header">
             <nav>
@@ -212,7 +211,8 @@
         </div>
         <div id="lower-bar">
             <div id="lower-bar-triple-section">
-            </div>
+<!--                 <button id="contour-back-button" onClick=contourBack()>Back</button>
+ -->            </div>
             <div id="lower-bar-triple-section">
                 <p id="progress-bar">1 / 8</p>
             </div>

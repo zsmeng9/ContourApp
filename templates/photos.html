@@ -35,17 +35,16 @@
 
         <h4 id="currentView" name="currentView"></h4>
         <p id="instruction-text">
-            Take a picture of your torso while holding a credit card flat against your chest, making sure it is parallel to your body
-            as shown in the example below! 
+            Make sure you are seated and sitting as straight as possible and are not wearing baggy clothing.
+            <br />
+            Then take a picture of your torso while holding a credit card flat against your chest, making sure it is parallel to your body as shown in the example below! 
 
             <br />
-            Extend your arms out at a 45 degree angle.
+            Extend your arms out at a 45 degree angle, entusre the neck, chest and waist are clearly visible and try to center the credit card on-screen as much as possible.
 
             <br />
-            Make sure your arms do not block the edges of your chest or waist.
-            <br />
 
-            Press the "Take Photo" button below once you've got your pose right!
+            Press the "Take Photo" button below once you've got your pose right! You'll have three seconds to fix your pose.
 
         </p>
         <div class="column-view-div">
@@ -72,14 +71,20 @@
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
-            <p id="instruction-text">Does your image on the right look like the sample image on the left?</p>
+            <p id="instruction-text">Does your image on the right look like the sample image on the left? Key things to check for are: <br /> 
+            Are your neck, chest and waist all visible in the photo?
+            <br />
+            Is the credit card around the center and you are not wearing baggy clothing?
+            </p>
 
             <div id="modal-sample-image">
             </div>
             <div id="preview-image">
             </div>
-            <button id="upload-photo" class="btn btn-success">Looks Good!</button>
-            <button id="retake-photo" class="btn btn-success">Retake photo!</button>
+            <div id="button-spacing">
+                <button id="upload-photo" class="btn btn-success">Looks Good!</button>
+                <button id="retake-photo" class="btn btn-success">Retake photo!</button>
+            </div>
           </div>
 
         </div>
@@ -145,7 +150,6 @@
         if (event.target == modal) {
             // if modal is up, there is a preview image in it
             // if we offclick the modal, the preview image should not re-appear
-            console.log("why hello there");
             var previewImage = document.getElementById("preview-image");
             previewImage.removeChild(previewImage.childNodes[1]);
             modal.style.display = "none";
@@ -233,7 +237,7 @@
         var imageClassName = (viewCount == 0) ? " front-image" : " side-image";
         var d = document.getElementById("sample-image");
         d.className += imageClassName;
-        var sideInstructionalText = "Take a picture of your side profile while holding a credit card perpendicular to your waist, like shown in the example below! <br /> Press the 'Take Photo' button below once you've got your pose right!";
+        var sideInstructionalText = " Make sure you are seated, sitting as straight as possible and are not wearing baggy clothing. <br /> Then take a picture of your torso while holding a credit card perpendicular against your waist, making sure it  is as shown in the example below! <br /> Extend your arms out at a 45 degree angle, entusre the neck, chest and waist are clearly visible and try to center the credit card on-screen as much as possible.<br /> Press the 'Take Photo' button below once you've got your pose right! You'll have three seconds to fix your pose.";
         document.getElementById("instruction-text").innerHTML = sideInstructionalText;
 
         // debug
@@ -265,6 +269,9 @@
 
                     document.getElementById("retake-photo").onclick = function () {
                             // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect
+                            /*var imageContainer = document.getElementsByClassName("modal-image-container");
+*/
+                            //imageContainer.parentNode.removeChild(imageContainer);
                             previewImage.removeChild(previewImage.childNodes[1]);
                             
                             // do nothing and close the modal

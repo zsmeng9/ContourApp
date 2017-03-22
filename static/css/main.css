@@ -36,6 +36,11 @@
     background-repeat: no-repeat;
 }
 
+#contour-image-container {
+    width: 48%;
+    display: inline-block;
+}
+
 #video-container {
     width: 48%;
     display: inline-block;
@@ -64,6 +69,7 @@
 #progress-bar {
     margin: 0 auto;
     text-align: center;
+    font-size: x-large;
     width: 100%;
 }
 
@@ -94,9 +100,14 @@
     background-repeat: no-repeat;
 }
 
-#contour-image-container {
-    width: 48%;
-    display: inline-block;
+#retake-photo {
+    background-color: red;
+    border-color: red;
+}
+
+#button-spacing {
+    margin: 0 auto;
+    width: 251px;
 }
 
 #testimg {

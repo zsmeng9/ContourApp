@@ -50,10 +50,29 @@
     transform: rotateY(180deg);
 }
 
+#lower-bar {
+    width: 100%;
+    height: 30px;
+}
+
+#lower-bar-triple-section {
+    float: left;
+    width: 33.3333333333%;
+    height: 100%;
+}
+
+#progress-bar {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
 /* take photo button fixed size */
 #snap {
     width: 96px;
     height: 34px;
+    float: right;
+    margin-right: 4px;
 }
 
 #modal-sample-image {

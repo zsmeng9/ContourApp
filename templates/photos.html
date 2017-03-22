@@ -54,7 +54,16 @@
     		<div id="video-container">
     		    <video autoplay="true" id="videoElement"></video>
     		</div>
-            <button id="snap" class="btn btn-success">Take Photo</button>
+        </div>
+        <div id="lower-bar">
+            <div id="lower-bar-triple-section">
+            </div>
+            <div id="lower-bar-triple-section">
+                <p id="progress-bar">1 / 2</p>
+            </div>
+            <div id="lower-bar-triple-section">
+                <button id="snap" class="btn btn-success">Take Photo</button>
+            </div>
         </div>
 
         <!-- The Modal -->
@@ -160,9 +169,9 @@
 /*        console.log("hello");
         context.drawImage(video, 0, 0, 640, 480);*/
         if (viewCount == 0) {
-
+            // update progress bar
+            document.getElementById("progress-bar").innerHTML = "2 / 2";
             var data = canvas.toDataURL('image/png', 0.0);
-                    // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
             $.ajax({
                 url: '/uploadFront',
                 data: data,
@@ -202,7 +211,6 @@
                 onrendered: function(canvas) {
                     document.body.appendChild(canvas);
                     var data = canvas.toDataURL('image/png', 0.0);
-                    // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
                     $.ajax({
                         url: '/uploadSide',
                         data: data,
@@ -281,7 +289,7 @@
                     modal.style.display = "block";
                 }
             });
-            
+
             takePhotoButton.innerHTML = "Take Photo";
         }, 3000) // timeout
 

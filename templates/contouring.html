@@ -66,7 +66,7 @@
                 count++;
             }
             if (count > 1) {
-                document.getElementById("nextbutton").style.visibility = "visible";
+                document.getElementById("snap").style.visibility = "visible";
             }
 
         $( ".ui-draggable-handle" ).draggable();
@@ -74,7 +74,7 @@
 
         dict[contours[contourCount].toString()] = [];
 
-        $("#nextbutton").click(function () {
+        $("#snap").click(function () {
             // get straight line distabce between two points
             // shift measurements to where the marker points as well
             var x1 = $('#draggable0').offset().left-12.5;
@@ -100,7 +100,7 @@
             measurementTuple = [];
             count = 0;
 
-            document.getElementById("nextbutton").style.visibility = "hidden";
+            document.getElementById("snap").style.visibility = "hidden";
 
             contourCount++;
 
@@ -117,6 +117,7 @@
             document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
             var imageClassName = "";
             var instructionalText = "";
+            var progressBar = document.getElementById("progress-bar");
 
             if (viewCount == 1) {
                 /* Side */
@@ -124,15 +125,23 @@
                 /* This variable name is decieving. It is really measuring the hypotenuse of the card but from the side view */                   
                     imageClassName = " measure-card-length";
                     instructionalText = "Click on the edges of the credit card's length twice to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    progressBar.innerHTML = "5 / 8";
+
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-length";
                     instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    progressBar.innerHTML = "6 / 8";
+
                 } else if (contourCount == 2) {
                     imageClassName = " measure-waist-length";
                     instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    progressBar.innerHTML = "7 / 8";
+
                 } else if (contourCount == 3) {
                     imageClassName = " measure-neck-length";
                     instructionalText = "Click the contour of the body at the neck- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    progressBar.innerHTML = "8 / 8";
+
                 }
             } else if (viewCount == 0) {
                 /* Front */
@@ -143,12 +152,17 @@
                 } else if (contourCount == 1) {
                     imageClassName = " measure-chest-width";
                     instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    progressBar.innerHTML = "2 / 8";
+
                 } else if (contourCount == 2) {
                     imageClassName = " measure-waist-width";
                     instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    progressBar.innerHTML = "3 / 8";
                 } else if (contourCount == 3) {
                     imageClassName = " measure-neck-width";
                     instructionalText = "Click the contour of the body at the neck- look for the outline of the body, not just the edges of the clothing! <br /> Markers can be dragged once they have been placed. <br /> Try zooming in on the webpage if you need to get a better look!";
+                    progressBar.innerHTML = "4 / 8";
+
                 }
             }
 
@@ -189,15 +203,24 @@
             <br />
             Press the next button that appears afterwards to proceed!
         </p>
-            <div class="column-view-div">
-                <div id="sample-image" class="container measure-card-width">
-                </div>
-                 <div id="contour-image-container">
-                    <img id='testimg' alt="Test Image" />
-                </div>
+        <div class="column-view-div">
+            <div id="sample-image" class="container measure-card-width">
             </div>
+             <div id="contour-image-container">
+                <img id='testimg' alt="Test Image" />
+            </div>
+        </div>
+        <div id="lower-bar">
+            <div id="lower-bar-triple-section">
+            </div>
+            <div id="lower-bar-triple-section">
+                <p id="progress-bar">1 / 8</p>
+            </div>
+            <div id="lower-bar-triple-section">
+                <button id='snap' type="button" class="btn btn-success" style="visibility:hidden;">Next</button>
+            </div>
+        </div>
 
-        <button id='nextbutton' type="button" class="btn btn-success" style="visibility:hidden;" >Next</button>
         <p id="dict"></p>
 
         <div>

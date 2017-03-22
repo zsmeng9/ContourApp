@@ -12,6 +12,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
+    <script>
+
+    </script>
 </head>
 
 <body>
@@ -54,6 +57,20 @@
             <button id="snap" class="btn btn-success">Take Photo</button>
         </div>
 
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+            <div id="preview-image">
+            </div>
+            <button id="upload-photo" class="btn btn-success">Looks Good!</button>
+            <button id="retake-photo" class="btn btn-success">Retake photo!</button>
+          </div>
+
+        </div>
 		<script>
     		var video = document.querySelector("#videoElement");
 
@@ -93,6 +110,34 @@
 
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
+    // flip context because the video is by default flipped backwards
+    context.scale(-1, 1);
+
+
+    // MODAL THINGS Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("snap");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            // if modal is up, there is a preview image in it
+            // if we offclick the modal, the preview image should not re-appear
+            var previewImage = document.getElementById("preview-image");
+            previewImage.removeChild(previewImage.childNodes[1]);
+            modal.style.display = "none";
+        }
+    }
 
     // stub for success handle
     function success(data) {
@@ -107,10 +152,21 @@
         console.log(error);
     }
 
-    document.getElementById("snap").addEventListener("click", function() {
-        context.drawImage(video, 0, 0, 640, 480);
+    function uploadPhoto(canvas) {
+/*        console.log("hello");
+        context.drawImage(video, 0, 0, 640, 480);*/
         if (viewCount == 0) {
-            html2canvas([canvas], {
+
+            var data = canvas.toDataURL('image/png', 0.0);
+                    // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
+            $.ajax({
+                url: '/uploadFront',
+                data: data,
+                type: 'GET',
+                success: success,
+                error: error
+            });
+            /*html2canvas([canvas], {
                 onrendered: function(canvas) {
                     document.body.appendChild(canvas);
                     var data = canvas.toDataURL('image/png', 0.0);
@@ -123,12 +179,22 @@
                         error: error
                     });
                 }
-            });
+            });*/
         }
         if (viewCount == 1) {
             document.getElementById("snap").disabled = true
             document.getElementById("snap").innerHTML = "LOADING PICTURES..."
-            html2canvas([canvas], {
+            var data = canvas.toDataURL('image/png', 0.0);
+                    // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
+            $.ajax({
+                url: '/uploadSide',
+                data: data,
+                type: 'GET',
+                success: success,
+                error: error
+            });
+
+/*            html2canvas([canvas], {
                 onrendered: function(canvas) {
                     document.body.appendChild(canvas);
                     var data = canvas.toDataURL('image/png', 0.0);
@@ -143,9 +209,10 @@
                         console.log("upload complete");
                     });
                 }
-            });
+            });*/
             setTimeout(function(){ window.location.href='/contouring'; }, 1000);
         }
+        // modal
         viewCount++;
         document.getElementById("currentView").innerHTML = views[1];
         // change sample image
@@ -160,5 +227,45 @@
         // debug
         console.log(viewCount);
         console.log("completed!");
-    }); // take photo click response
+    }; // take photo click response
+
+
+    // When the user clicks on the button, open the modal 
+    btn.onclick = function() {
+        // negative width to flip the image the right way
+        context.drawImage(video, 0, 0, -640, 480);
+        html2canvas([canvas], {
+            onrendered: function(canvas) {
+                // render to modal
+                var previewImage = document.getElementById("preview-image");
+                previewImage.appendChild(canvas);
+
+                document.getElementById("retake-photo").onclick = function () {
+                        // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect
+                        previewImage.removeChild(previewImage.childNodes[1]);
+                        
+                        // do nothing and close the modal
+                        modal.style.display = "none";
+                    };
+
+                document.getElementById("upload-photo").onclick = function() {
+                        // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect
+                        previewImage.removeChild(previewImage.childNodes[1]);
+                        
+                        // close the modal
+                        modal.style.display = "none";
+
+                        // closure to capture local canvas state
+                        var myClosure = function() {
+                            return uploadPhoto(canvas);
+                        }
+                        myClosure();
+                    };
+                
+                // set everything up and then display modal
+                modal.style.display = "block";
+            }
+        });
+    }
+
 </script>

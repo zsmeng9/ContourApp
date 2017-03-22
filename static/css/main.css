@@ -36,6 +36,16 @@
     background-repeat: no-repeat;
 }
 
+#modal-sample-image {
+    width: 48%;
+    height: 360px;
+    margin: 0px;
+    float: left;
+    margin-right: 5px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
 #video-container {
     width: 48%;
     display: inline-block;
@@ -48,6 +58,15 @@
     height: 480px;
     background-color: #666;
     transform: rotateY(180deg);
+}
+
+.modal-image-container {
+    width: calc(640*0.75px);
+    height: calc(480*0.75px);
+    margin: 0px;
+    margin-right: 5px;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 #contour-image-container {

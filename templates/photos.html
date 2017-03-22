@@ -63,7 +63,10 @@
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
+            <p id="instruction-text">Does your image on the right look like the sample image on the left?</p>
+
+            <div id="modal-sample-image">
+            </div>
             <div id="preview-image">
             </div>
             <button id="upload-photo" class="btn btn-success">Looks Good!</button>
@@ -133,6 +136,7 @@
         if (event.target == modal) {
             // if modal is up, there is a preview image in it
             // if we offclick the modal, the preview image should not re-appear
+            console.log("why hello there");
             var previewImage = document.getElementById("preview-image");
             previewImage.removeChild(previewImage.childNodes[1]);
             modal.style.display = "none";
@@ -232,13 +236,19 @@
 
     // When the user clicks on the button, open the modal 
     btn.onclick = function() {
+        // add correct sample image to modal
+        var modalImageClassName = (viewCount == 0) ? " front-image" : " side-image";
+        document.getElementById("modal-sample-image").className += modalImageClassName;
+        
         // negative width to flip the image the right way
         context.drawImage(video, 0, 0, -640, 480);
         html2canvas([canvas], {
             onrendered: function(canvas) {
                 // render to modal
                 var previewImage = document.getElementById("preview-image");
-                previewImage.appendChild(canvas);
+                var domPreviewImage = previewImage.appendChild(canvas);
+                domPreviewImage.className = "modal-image-container";
+                // add some classes, do some styling
 
                 document.getElementById("retake-photo").onclick = function () {
                         // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect

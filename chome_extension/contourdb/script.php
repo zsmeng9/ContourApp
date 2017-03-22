@@ -23,6 +23,11 @@ if (pg_num_rows($result) == 0) {
 	        $storename = $meta->getAttribute('content');
 	}
 
+	$querystoreid = "select id from stores where name='" . $storename ."'";
+	$resultsstoreid = pg_query($db, $querystoreid);
+	$store_id = pg_fetch_all($resultsstoreid)[0]["id"];
+
+
 	// Get user measurements
 	$user_id = pg_fetch_result($result, 0, "id" );
 	$query2 = "select neck, chest, waist from user_sizes where user_id=" . $user_id . "order by timestamp desc limit 1";
@@ -42,12 +47,26 @@ if (pg_num_rows($result) == 0) {
 	$waist_sizing = pg_fetch_all($resultwaist);
 
 	$storenamearray = array("J.Crew");
+
+	$reviewcountquery = "select count(*) as count from purchase_rating where store_id=" . $store_id;
+	$resultreviewcount = pg_query($db, $reviewcountquery);
+	$review_count = pg_fetch_all($resultreviewcount)[0]["count"];
+
 	if (in_array ($storename, $storenamearray)) {
 		echo "<h2>Welcome " . $_POST["username"] . "</h2>
 		<h3>Enjoy shopping with confidence at " . $storename . "</h3><br>
 		<li>Neck :" . $user_size[0]["neck"] . " Recommended Size: " . $neck_sizing[0]["size"] . "</li>
 		<li>Chest :" . $user_size[0]["chest"] . " Recommended Size: " . $chest_sizing[0]["size"] . "</li>
-		<li>Waist :" . $user_size[0]["waist"] . " Recommended Size: " . $waist_sizing[0]["size"] . "</li>";
+		<li>Waist :" . $user_size[0]["waist"] . " Recommended Size: " . $waist_sizing[0]["size"] . "</li>
+		<h3>Contour Customer Fit Reviews</h3>
+		<input type='hidden' id='user_id' value=" . $user_id . ">
+		<input type='hidden' id='store_id' value=" . $store_id . ">
+		<input type='text' id='size_bought' placeholder='Size Bought'><br>
+		<input type='text' id='fit_preference' placeholder='Fit Preference'><br>
+		<input type='text' id='bought_fit_rating' placeholder='Rating'><br>
+		<input type='text' id='comments' placeholder='Comments'><br>
+		<button id='submit_review'>Submit Review</button>
+		<button id='view_reviews'>View Reviews (" . $review_count . ")</button>";
 	}
 }
 ?>

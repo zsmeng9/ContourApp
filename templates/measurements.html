@@ -33,8 +33,26 @@
             <h3 class="text-muted">Contour App</h3>
         </div>
 
-        {{ profile }}
- 
+        <h3>Your Measurements</h3>
+        <table class='table'>
+            <tbody>
+                <tr>
+                    <th scope="row">Chest</th>
+                    <td>{{ profile['CHEST Width'] }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Waist</th>
+                    <td>{{ profile['WAIST Width'] }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Neck</th>
+                    <td>{{ profile['NECK Width'] }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Do these measurements look good? If not you can measure yourself again.</p> 
+        <a href="photos" class="btn btn-default">Retake</a><br><br><br>
+        <p>If you are satisfied with the measurements, use our Chrome Extension and start shopping.</p> 
     </div>
 </body>
  

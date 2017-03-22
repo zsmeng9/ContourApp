@@ -181,9 +181,9 @@
             // update progress bar
             document.getElementById("progress-bar").innerHTML = "2 / 2";
 
-            // reset background size style
-            document.getElementById("sample-image").style.backgroundSize = "";
-            document.getElementById("modal-sample-image").style.backgroundSize = "";
+            // second image size is fine
+            document.getElementById("sample-image").style.backgroundSize = "100%";
+            document.getElementById("modal-sample-image").style.backgroundSize = "100%";
 
             var data = canvas.toDataURL('image/png', 0.0);
             $.ajax({

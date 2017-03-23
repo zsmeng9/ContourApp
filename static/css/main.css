@@ -53,6 +53,16 @@
     height: 480px;
     background-color: #666;
     transform: rotateY(180deg);
+    position: relative;
+}
+
+#countdown {
+    font-size: 50px;
+    z-index: 4;
+    position: absolute;
+/*  center relative to size of video using padding */
+    padding-left: 302px;
+    padding-top: 195px;
 }
 
 #lower-bar {

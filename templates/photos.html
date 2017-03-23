@@ -51,6 +51,7 @@
             <div id="sample-image" class="container">
             </div>
     		<div id="video-container">
+                <div id="countdown"></div>
     		    <video autoplay="true" id="videoElement"></video>
     		</div>
         </div>
@@ -210,9 +211,9 @@
         }
         if (viewCount == 1) {
             document.getElementById("snap").disabled = true
-            document.getElementById("snap").innerHTML = "LOADING PICTURES..."
+            document.getElementById("snap").innerHTML = "LOADING..."
             var data = canvas.toDataURL('image/png', 0.0);
-                    // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
+            // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
             $.ajax({
                 url: '/uploadSide',
                 data: data,
@@ -259,7 +260,7 @@
     // When the user clicks on the button, open the modal
     // add timeout delay 
     btn.onclick = function() {
-        var takePhotoButton = document.getElementById("snap");
+        var takePhotoButton = document.getElementById("countdown");
         takePhotoButton.innerHTML = "3";
         setTimeout(function() {
              // add correct sample image to modal
@@ -307,7 +308,7 @@
                 }
             });
 
-            takePhotoButton.innerHTML = "Take Photo";
+            takePhotoButton.innerHTML = "";
         }, 3000) // timeout
 
         setTimeout(function() { takePhotoButton.innerHTML = "2"; }, 1000);

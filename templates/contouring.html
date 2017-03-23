@@ -24,173 +24,12 @@
         var viewCount = 0;
         var views = {{ views|safe }};
 
-        $(document).ready(function(){
-            var fronttxt = {{ fronttxt|safe }};
-            var sidetxt = {{ sidetxt|safe }};
+        var dict = {};
 
-            document.getElementById("testimg").src=fronttxt;
-            // counter to track number of points
-            var count = 0;
+        // counter to track number of points
+        var count = 0;
 
-            var totalContours = contours.length;
-
-            var totalViews = views.length;
-
-            var dict = {};
-            var measurementTuple = [];
-
-            document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
-
-                $("#testimg").click(function (ev) {
-                mouseX = ev.pageX;
-                mouseY = ev.pageY;
-
-                var markerPath = "url(/static/images/maps-marker.png)";
-                var width = '25px';
-                var height = '37px';
-                if (count < 2) {
-                    // top and left are shifted relative to the size of the
-                    // marker size in order to align the click with the bottom of the
-                    // pointer
-                    $("body").append(
-                        $("<div></div>")
-                            .attr('id', "draggable" + count)
-                            .attr('class', 'ui-draggable-handle')
-                            .css('position', 'absolute')
-                            .css('top', mouseY-37 + 'px')
-                            .css('left', mouseX-12.5 + 'px')
-                            .css('width', width)
-                            .css('height', height)
-                            .css('background-image', markerPath)
-                            .css('background-size', '100%')
-                    );
-                    measurementTuple.push(mouseX);
-                    count++;
-                }
-                if (count > 1) {
-                    document.getElementById("snap").style.visibility = "visible";
-                }
-
-            $( ".ui-draggable-handle" ).draggable();
-            });
-
-            dict[contours[contourCount].toString()] = [];
-
-            $("#snap").click(function () {
-                // get straight line distabce between two points
-                // shift measurements to where the marker points as well
-                var x1 = $('#draggable0').offset().left-12.5;
-                var x2 = $('#draggable1').offset().left-12.5;
-
-                var y1 = $('#draggable0').offset().top-37;
-                var y2 = $('#draggable1').offset().top-37;
-
-                var distance = Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
-
-                measurement = Math.abs(distance);
-                if (contours[contourCount.toString()] in dict) {
-                    dict[contours[contourCount].toString()].push(measurement);
-                } else {
-                    dict[contours[contourCount].toString()] = [];
-                    dict[contours[contourCount].toString()].push(measurement);
-                }
-                document.getElementById("dict").innerHTML = JSON.stringify(dict);
-
-                // remove points and reset tuple and count
-                document.getElementById("draggable0").remove();
-                document.getElementById("draggable1").remove();
-                measurementTuple = [];
-                count = 0;
-
-                document.getElementById("snap").style.visibility = "hidden";
-
-                contourCount++;
-
-                if (contourCount == totalContours) {
-                    contourCount = 0;
-                    viewCount++;
-                    document.getElementById("testimg").src=sidetxt;
-                }
-
-                if (viewCount == totalViews) {
-                    window.location.href='/measurements?' + JSON.stringify(dict)
-                }
-
-                document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
-                var imageClassName = "";
-                var instructionalText = "";
-                var progressBar = document.getElementById("progress-bar");
-
-                if (viewCount == 1) {
-                    /* Side */
-                    if (contourCount == 0) {
-                        document.getElementById("sample-image").style.backgroundSize = "123%";
-                    /* This variable name is decieving. It is really measuring the hypotenuse of the card but from the side view */                   
-                        imageClassName = " measure-card-length";
-                        instructionalText = "Click on any two opposite corners of the credit card to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed.";
-                        progressBar.innerHTML = "5 / 8";
-
-                    } else if (contourCount == 1) {
-                        imageClassName = " measure-chest-length";
-                        instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! Note that your chest is where your nipple line is. <br /> Markers can be dragged once they have been placed.";
-                        progressBar.innerHTML = "6 / 8";
-
-                    } else if (contourCount == 2) {
-                        imageClassName = " measure-waist-length";
-                        instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! Note that the waist is 1 inch above the belly button.<br /> Markers can be dragged once they have been placed.";
-                        progressBar.innerHTML = "7 / 8";
-
-                    } else if (contourCount == 3) {
-                        imageClassName = " measure-neck-length";
-                        instructionalText = "Click the contour of the body at the neck. <br /> Markers can be dragged once they have been placed.";
-                        progressBar.innerHTML = "8 / 8";
-                    }
-                } else if (viewCount == 0) {
-                    /* Front */
-                    if (contourCount == 0) {
-                    /* This variable name is decieving. It is really measuring the hypotenuse but from the front view */                    
-                        imageClassName = " measure-card-width";
-                        instructionalText = "Click on any two opposite corners of the credit card to create two markers defining its hypotenuse! <br /> Markers can be dragged once they have been placed.";
-                        progressBar.innerHTML = "1 / 8";
-                    } else if (contourCount == 1) {
-                        imageClassName = " measure-chest-width";
-                        instructionalText = "Click the contour of the body at the chest- look for the outline of the body, not just the edges of the clothing! Note that your chest is where your nipple line is.<br /> Markers can be dragged once they have been placed.";
-                        progressBar.innerHTML = "2 / 8";
-
-                    } else if (contourCount == 2) {
-                        imageClassName = " measure-waist-width";
-                        instructionalText = "Click the contour of the body at the waist- look for the outline of the body, not just the edges of the clothing! Note that the waist is 1 inch above the belly button.<br /> Markers can be dragged once they have been placed.";
-                        progressBar.innerHTML = "3 / 8";
-                    } else if (contourCount == 3) {
-                        // these sample images are smaller for some reason
-                        // so we need to go up to 114%
-                        document.getElementById("sample-image").style.backgroundSize = "114%";
-                        imageClassName = " measure-neck-width";
-                        instructionalText = "Click the contour of the body at the neck. <br /> Markers can be dragged once they have been placed.";
-                        progressBar.innerHTML = "4 / 8";
-                    }
-                }
-
-                document.getElementById("sample-image").className = "container";
-                var d = document.getElementById("sample-image");
-                d.className += imageClassName;
-                instructionalText += "<br /> Press the next button that appears afterwards to proceed!";
-                document.getElementById("instruction-text").innerHTML = instructionalText;
-            });
-        });
-
-        function contourBack() {
-            if (contourCount == 0 && viewCount == 0) {
-                window.location.href='/photos';
-                return 0;
-            } else if (contourCount == 0) {
-                dict[contours[contourCount].toString()].pop();
-                viewCount--;
-            } else {
-                contourCount--;
-                dict[contours[contourCount].toString()].pop();
-            }
-
+        function updateContouringView() {
             document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
             var imageClassName = "";
             var instructionalText = "";
@@ -251,7 +90,125 @@
             d.className += imageClassName;
             instructionalText += "<br /> Press the next button that appears afterwards to proceed!";
             document.getElementById("instruction-text").innerHTML = instructionalText;
-        }
+        } // updateContouringView
+
+        $(document).ready(function(){
+            var fronttxt = {{ fronttxt|safe }};
+            var sidetxt = {{ sidetxt|safe }};
+
+            document.getElementById("testimg").src=fronttxt;
+
+            var totalContours = contours.length;
+
+            var totalViews = views.length;
+
+            var measurementTuple = [];
+
+            document.getElementById("currentContour").innerHTML = views[viewCount].toString() + " - " + contours[contourCount].toString();
+
+                $("#testimg").click(function (ev) {
+                mouseX = ev.pageX;
+                mouseY = ev.pageY;
+
+                var markerPath = "url(/static/images/maps-marker.png)";
+                var width = '25px';
+                var height = '37px';
+                if (count < 2) {
+                    // top and left are shifted relative to the size of the
+                    // marker size in order to align the click with the bottom of the
+                    // pointer
+                    $("body").append(
+                        $("<div></div>")
+                            .attr('id', "draggable" + count)
+                            .attr('class', 'ui-draggable-handle')
+                            .css('position', 'absolute')
+                            .css('top', mouseY-37 + 'px')
+                            .css('left', mouseX-12.5 + 'px')
+                            .css('width', width)
+                            .css('height', height)
+                            .css('background-image', markerPath)
+                            .css('background-size', '100%')
+                    );
+                    measurementTuple.push(mouseX);
+                    count++;
+                }
+                if (count > 1) {
+                    document.getElementById("snap").style.visibility = "visible";
+                }
+
+            $( ".ui-draggable-handle" ).draggable();
+            });
+
+            dict[contours[contourCount].toString()] = [];
+
+            $("#snap").click(function () {
+                // get straight line distabce between two points
+                // shift measurements to where the marker points as well
+                var x1 = $('#draggable0').offset().left-12.5;
+                var x2 = $('#draggable1').offset().left-12.5;
+
+                var y1 = $('#draggable0').offset().top-37;
+                var y2 = $('#draggable1').offset().top-37;
+
+                var distance = Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+
+                measurement = Math.abs(distance);
+                if (contours[contourCount.toString()] in dict) {
+                    dict[contours[contourCount].toString()].push(measurement);
+                } else {
+                    dict[contours[contourCount].toString()] = [];
+                    dict[contours[contourCount].toString()].push(measurement);
+                }
+
+                // remove points and reset tuple and count
+                document.getElementById("draggable0").remove();
+                document.getElementById("draggable1").remove();
+                measurementTuple = [];
+                count = 0;
+
+                document.getElementById("snap").style.visibility = "hidden";
+
+                contourCount++;
+
+                if (contourCount == totalContours) {
+                    contourCount = 0;
+                    viewCount++;
+                    document.getElementById("testimg").src=sidetxt;
+                }
+
+                if (viewCount == totalViews) {
+                    window.location.href='/measurements?' + JSON.stringify(dict)
+                }
+
+                updateContouringView();
+            });
+        });
+
+        function contourBack() {
+            if (contourCount == 0 && viewCount == 0) {
+                window.location.href='/photos';
+                return 0;
+            } else if (contourCount == 0 && viewCount == 1) {
+                viewCount--;
+                contourCount = 3;
+            } else {
+                contourCount--;
+            }
+
+            updateContouringView();
+
+            count = 0;
+            // delete last added value
+            dict[contours[contourCount].toString()].pop();
+            if (document.getElementById("draggable0") != null) {
+                document.getElementById("draggable0").remove();
+            }
+
+            if (document.getElementById("draggable1") != null) {
+                document.getElementById("draggable1").remove();
+            }
+        } //contourBack
+
     </script>
 
 </head>
@@ -290,7 +247,7 @@
         </div>
         <div id="lower-bar">
             <div id="lower-bar-triple-section">
-                <button id="contour-back-button" onClick=contourBack()>Back</button>
+                <button id="contour-back-button" class="btn btn-success" onClick=contourBack()>Back</button>
             </div>
             <div id="lower-bar-triple-section">
                 <p id="progress-bar">1 / 8</p>

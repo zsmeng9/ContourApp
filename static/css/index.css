@@ -15,8 +15,9 @@ body {
 }
 
 #login-section {
-	width: 50%;
+	width: 30%;
 	float: left;
+	padding-top: 35px;
 }
 
 #login-form {
@@ -32,6 +33,10 @@ body {
 }
 
 #video-section {
-	width: 50%;
+	width: 70%;
 	float: left;
+}
+
+#tutorial-video {
+	float: right;
 }

@@ -48,11 +48,14 @@
             </form>
 
             <p>
-            Or <a href="/photos">click here</a> to login if you already have an account with us.
+                Or <a href="/photos">click here</a> to login if you already have an account with us.
             </p>
-<!--             <button type="button" class="btn btn-info" onclick="window.location.href='{{ url_for('photos') }}'">Login!</button> -->
         </div>
-        <div id="video-section">hello friends
+        <div id="video-section">
+        <video id="tutorial-video" width="720" height="480" controls>
+          <source src="/static/videos/tutorial.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         </div>
     </div>
 </body>

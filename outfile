@@ -35,6 +35,44 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: purchase_rating; Type: TABLE; Schema: public; Owner: allanmeng
+--
+
+CREATE TABLE purchase_rating (
+    id integer NOT NULL,
+    store_id integer,
+    size_bought text,
+    fit_preference text,
+    bought_fit_rating text,
+    comments text,
+    user_id integer
+);
+
+
+ALTER TABLE purchase_rating OWNER TO allanmeng;
+
+--
+-- Name: purchase_rating_id_seq; Type: SEQUENCE; Schema: public; Owner: allanmeng
+--
+
+CREATE SEQUENCE purchase_rating_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE purchase_rating_id_seq OWNER TO allanmeng;
+
+--
+-- Name: purchase_rating_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: allanmeng
+--
+
+ALTER SEQUENCE purchase_rating_id_seq OWNED BY purchase_rating.id;
+
+
+--
 -- Name: store_sizes; Type: TABLE; Schema: public; Owner: allanmeng
 --
 
@@ -179,6 +217,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
+-- Name: purchase_rating id; Type: DEFAULT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY purchase_rating ALTER COLUMN id SET DEFAULT nextval('purchase_rating_id_seq'::regclass);
+
+
+--
 -- Name: store_sizes id; Type: DEFAULT; Schema: public; Owner: allanmeng
 --
 
@@ -207,6 +252,26 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
+-- Data for Name: purchase_rating; Type: TABLE DATA; Schema: public; Owner: allanmeng
+--
+
+COPY purchase_rating (id, store_id, size_bought, fit_preference, bought_fit_rating, comments, user_id) FROM stdin;
+1	1	L	baggy	great	yay	4
+4	1	L	baggy	great	yay	4
+3	1	L	baggy	great	yay	4
+5	1	M	baggy	fit great	i like contour	4
+2	1	L	baggy	great	yay	4
+\.
+
+
+--
+-- Name: purchase_rating_id_seq; Type: SEQUENCE SET; Schema: public; Owner: allanmeng
+--
+
+SELECT pg_catalog.setval('purchase_rating_id_seq', 5, true);
+
+
+--
 -- Data for Name: store_sizes; Type: TABLE DATA; Schema: public; Owner: allanmeng
 --
 
@@ -232,7 +297,7 @@ SELECT pg_catalog.setval('store_sizes_id_seq', 1, false);
 --
 
 COPY stores (id, name) FROM stdin;
-1	jcrew
+1	J.Crew
 \.
 
 
@@ -261,6 +326,17 @@ COPY user_sizes (id, user_id, neck, chest, waist, "timestamp") FROM stdin;
 11	17	18.0170288	42.5039978	39.0141525	2017-03-16 17:49:38.508628
 12	12	14.8863268	14.420783	19.542099	2017-03-19 12:47:51.235405
 13	12	10.503294	6.64792681	11.4434547	2017-03-19 13:02:33.265531
+14	12	10.4097195	6.8140316	8.39058208	2017-03-20 19:42:07.107726
+15	4	13.6637831	17.2517014	13.6898689	2017-03-22 15:16:27.479255
+16	4	16.6616497	15.4494104	10.8136024	2017-03-22 17:19:30.621513
+17	4	16.6616497	15.4494104	10.8136024	2017-03-22 17:26:39.236207
+18	4	16.6616497	15.4494104	10.8136024	2017-03-22 17:29:51.592175
+19	4	16.6616497	15.4494104	10.8136024	2017-03-22 17:32:52.820284
+20	4	16.6616497	15.4494104	10.8136024	2017-03-22 17:34:06.656225
+21	4	16.6616497	15.4494104	10.8136024	2017-03-22 17:34:37.621421
+22	4	16.6616497	15.4494104	10.8136024	2017-03-22 18:14:12.456914
+23	4	16.6616497	15.4494104	10.8136024	2017-03-22 18:14:19.582907
+24	4	16.6616497	15.4494104	10.8136024	2017-03-22 18:14:22.815855
 \.
 
 
@@ -268,7 +344,7 @@ COPY user_sizes (id, user_id, neck, chest, waist, "timestamp") FROM stdin;
 -- Name: user_sizes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: allanmeng
 --
 
-SELECT pg_catalog.setval('user_sizes_id_seq', 13, true);
+SELECT pg_catalog.setval('user_sizes_id_seq', 24, true);
 
 
 --
@@ -292,6 +368,8 @@ COPY users (id, username, password) FROM stdin;
 15	contourtest                                       	contourtest                                       
 16	test                                              	test                                              
 17	jefferson                                         	jefferson                                         
+18	asf                                               	asdf                                              
+19	allan                                             	mneg                                              
 \.
 
 
@@ -299,7 +377,15 @@ COPY users (id, username, password) FROM stdin;
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: allanmeng
 --
 
-SELECT pg_catalog.setval('users_id_seq', 17, true);
+SELECT pg_catalog.setval('users_id_seq', 19, true);
+
+
+--
+-- Name: purchase_rating purchase_rating_pkey; Type: CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY purchase_rating
+    ADD CONSTRAINT purchase_rating_pkey PRIMARY KEY (id);
 
 
 --
@@ -332,6 +418,22 @@ ALTER TABLE ONLY user_sizes
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: purchase_rating purchase_rating_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY purchase_rating
+    ADD CONSTRAINT purchase_rating_store_id_fkey FOREIGN KEY (store_id) REFERENCES stores(id);
+
+
+--
+-- Name: purchase_rating purchase_rating_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: allanmeng
+--
+
+ALTER TABLE ONLY purchase_rating
+    ADD CONSTRAINT purchase_rating_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --

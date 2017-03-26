@@ -33,20 +33,30 @@
             <h3 class="text-muted">Contour App</h3>
         </div>
 
-        <h3>Your Measurements</h3>
+        <h3>Here Are Your Measurements, {{ username }} :</h3>
         <table class='table'>
+            <thead>
+                <tr>
+                    <th>Body Part</th>
+                    <th>Inches</th>
+                    <th>Centimeters</th>
+                </tr>
+
             <tbody>
                 <tr>
                     <th scope="row">Chest</th>
-                    <td>{{ profile['CHEST Width'] }}</td>
+                    <td>{{ final_measurements['CHEST Width in'] }}</td>
+                    <td>{{ final_measurements['CHEST Width cm'] }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Waist</th>
-                    <td>{{ profile['WAIST Width'] }}</td>
+                    <td>{{ final_measurements['WAIST Width in'] }}</td>
+                    <td>{{ final_measurements['WAIST Width cm'] }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Neck</th>
-                    <td>{{ profile['NECK Width'] }}</td>
+                    <td>{{ final_measurements['NECK Width in'] }}</td>
+                    <td>{{ final_measurements['NECK Width cm'] }}</td>
                 </tr>
             </tbody>
         </table>

@@ -184,6 +184,7 @@ def measurements():
     for contour in contours:
         if contour != 'CARD length':
             deltaTuple = deltas[contour]
+            # raw output in inches
             profile[contour] = algorithm(deltaTuple, pixelsPerInchFront,
                                          pixelsPerInchSide)
     print request.authorization.username
@@ -202,12 +203,27 @@ def measurements():
     db.session.add(newUserSize)
     db.session.commit()
 
-    # round to the nearest integer
-    profile['NECK Width'] = int(round(profile['NECK Width']))
-    profile['CHEST Width'] = int(round(profile['CHEST Width']))
-    profile['WAIST Width'] = int(round(profile['WAIST Width']))
 
-    return render_template('measurements.html', profile=profile)
+    final_measurements = {}
+    for contour in contours:
+        if contour != 'CARD length':
+            # raw output in inches, rounded to nearest inch
+            final_measurements[contour + ' in'] = int(round(profile[contour]))
+
+    for contour in contours:
+        if contour != 'CARD length':
+            # convert to CM
+            measurement_in_cm = profile[contour] * 2.54
+            # round to nearest cm and write to dict
+            final_measurements[contour + ' cm'] = int(round(measurement_in_cm))
+
+    print (final_measurements)
+
+    return render_template(
+        'measurements.html',
+        final_measurements=final_measurements,
+        username=request.authorization.username
+        )
 
 
 def algorithm(deltaTuple, pixelsPerInchFront, pixelsPerInchSide):

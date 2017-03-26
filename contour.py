@@ -1,15 +1,13 @@
+from cgi import parse_qs
+from functools import wraps
 import json
 import math
 import os
 
 from flask import Flask, render_template, request, Response
-
-from urlparse import urlparse
-from cgi import parse_qs, escape
-
-from werkzeug.contrib.cache import SimpleCache
 from flask_sqlalchemy import SQLAlchemy
-from functools import wraps
+from werkzeug.contrib.cache import SimpleCache
+
 
 cache = SimpleCache()
 
@@ -37,6 +35,7 @@ class User(db.Model):
         self.username = username
         self.password = password
 
+
 # Create our database model
 class UserSizes(db.Model):
     __tablename__ = "user_sizes"
@@ -63,12 +62,14 @@ def check_auth(username, password):
 
     return False
 
+
 def authenticate():
     """Sends a 401 response that enables basic auth"""
     return Response(
     'Could not verify your access level for that URL.\n'
     'You have to login with proper credentials', 401,
     {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
 
 def requires_auth(f):
     @wraps(f)
@@ -79,14 +80,17 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
+
 @app.route("/")
 def main():
     return render_template('index.html')
+
 
 @app.route("/enterHeight", methods=['POST'])
 def enterHeight():
     cache.set('height', request.form['userHeight'])
     print (cache.get('height'))
+
 
 @app.route("/addUser", methods=['GET'])
 def addUser():
@@ -95,8 +99,7 @@ def addUser():
     username = d.get('username', [''])[0]
     password = d.get('password', [''])[0]
 
-    newUser = User(username = username,
-                    password = password)
+    newUser = User(username=username, password=password)
 
     db.session.add(newUser)
     db.session.commit()
@@ -104,6 +107,7 @@ def addUser():
     return render_template(
         'newuser.html',
         username=json.dumps(username))
+
 
 @app.route("/photos")
 @requires_auth
@@ -114,14 +118,9 @@ def photos():
 
 @app.route("/uploadFront")
 @requires_auth
-#cacheFront
+# cacheFront
 def cacheFront():
     query_string = request.query_string
-    # print ("sup")
-    # f = open("static/front.txt", "wb")
-    # print ("opening file")
-    # f.write(query_string)
-    # f.close()
     cache.set('front', query_string)
 
     return render_template('photos.html')
@@ -129,7 +128,7 @@ def cacheFront():
 
 @app.route("/uploadSide")
 @requires_auth
-#cacheSide
+# cacheSide
 def cacheSide():
     query_string = request.query_string
 
@@ -145,9 +144,7 @@ def cacheSide():
 @app.route("/contouring")
 @requires_auth
 def contouring():
-    #read from cache
-    # fronttxt = open("static/front.txt", "rb").read().decode("utf-8")
-    # sidetxt = open("static/side.txt", "rb").read().decode("utf-8")
+    # read from cache
     fronttxt = cache.get('front').decode("utf-8")
     sidetxt = cache.get('side').decode("utf-8")
 
@@ -158,6 +155,7 @@ def contouring():
         contours=json.dumps(contours), views=json.dumps(views)
     )
 
+
 @app.route("/contourupload")
 @requires_auth
 def contourupload():
@@ -165,6 +163,7 @@ def contourupload():
         'contourupload.html',
         contours=json.dumps(contours), views=json.dumps(views)
     )
+
 
 @app.route("/measurements")
 @requires_auth
@@ -195,14 +194,14 @@ def measurements():
     chest = profile['CHEST Width']
     waist = profile['WAIST Width']
 
-    newUserSize = UserSizes(user_id = user_id,
-                    neck = neck,
-                    chest = chest,
-                    waist = waist)
+    newUserSize = UserSizes(
+        user_id=user_id,
+        neck=neck,
+        chest=chest,
+        waist=waist)
 
     db.session.add(newUserSize)
     db.session.commit()
-
 
     final_measurements = {}
     for contour in contours:
@@ -223,8 +222,7 @@ def measurements():
     return render_template(
         'measurements.html',
         final_measurements=final_measurements,
-        username=json.dumps(request.authorization.username)
-        )
+        username=json.dumps(request.authorization.username))
 
 
 def algorithm(deltaTuple, pixelsPerInchFront, pixelsPerInchSide):

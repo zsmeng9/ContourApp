@@ -37,7 +37,7 @@
         <p id="instruction-text">
             Make sure you are seated and sitting as straight as possible and are not wearing baggy clothing.
             <br />
-            Then take a picture of your torso while holding a credit card flat against your chest, making sure it is parallel to your body as shown in the example below! 
+            Then take a picture of your torso while holding a credit card flat against your chest, making sure it is parallel to your body as shown in the example below!
 
             <br />
             Extend your arms out at a 45 degree angle, entusre the neck, chest and waist are clearly visible and try to center the credit card on-screen as much as possible.
@@ -72,7 +72,7 @@
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
-            <p id="instruction-text">Does your image on the right look like the sample image on the left? Key things to check for are: <br /> 
+            <p id="instruction-text">Does your image on the right look like the sample image on the left? Key things to check for are: <br />
             Are your neck, chest and waist all visible in the photo?
             <br />
             Is the credit card around the center and you are not wearing baggy clothing?
@@ -176,8 +176,6 @@
     }
 
     function uploadPhoto(canvas) {
-/*        console.log("hello");
-        context.drawImage(video, 0, 0, 640, 480);*/
         if (viewCount == 0) {
             // update progress bar
             document.getElementById("progress-bar").innerHTML = "2 / 2";
@@ -194,20 +192,6 @@
                 success: success,
                 error: error
             });
-            /*html2canvas([canvas], {
-                onrendered: function(canvas) {
-                    document.body.appendChild(canvas);
-                    var data = canvas.toDataURL('image/png', 0.0);
-                    // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
-                    $.ajax({
-                        url: '/uploadFront',
-                        data: data,
-                        type: 'GET',
-                        success: success,
-                        error: error
-                    });
-                }
-            });*/
         }
         if (viewCount == 1) {
             document.getElementById("snap").disabled = true
@@ -221,22 +205,6 @@
                 success: success,
                 error: error
             });
-
-/*            html2canvas([canvas], {
-                onrendered: function(canvas) {
-                    document.body.appendChild(canvas);
-                    var data = canvas.toDataURL('image/png', 0.0);
-                    $.ajax({
-                        url: '/uploadSide',
-                        data: data,
-                        type: 'GET',
-                        success: success,
-                        error: error
-                    }).then(function() {
-                        console.log("upload complete");
-                    });
-                }
-            });*/
             setTimeout(function(){ window.location.href='/contouring'; }, 1000);
         }
         // modal
@@ -258,7 +226,7 @@
 
 
     // When the user clicks on the button, open the modal
-    // add timeout delay 
+    // add timeout delay
     btn.onclick = function() {
         var takePhotoButton = document.getElementById("countdown");
         // countdown start
@@ -267,7 +235,7 @@
              // add correct sample image to modal
             var modalImageClassName = (viewCount == 0) ? " front-image" : " side-image";
             document.getElementById("modal-sample-image").className += modalImageClassName;
-            
+
             // "take the image"
             // negative width to flip the image the right way
             context.drawImage(video, 0, 0, -640, 480);
@@ -285,7 +253,7 @@
 */
                             //imageContainer.parentNode.removeChild(imageContainer);
                             previewImage.removeChild(previewImage.childNodes[1]);
-                            
+
                             // do nothing and close the modal
                             modal.style.display = "none";
                         };
@@ -293,7 +261,7 @@
                     document.getElementById("upload-photo").onclick = function() {
                             // for some reason, there is another child node that is there at position 0 ...it is #text and seems to contain nothing and i do not see this element when i inspect
                             previewImage.removeChild(previewImage.childNodes[1]);
-                            
+
                             // close the modal
                             modal.style.display = "none";
 
@@ -303,23 +271,18 @@
                             }
                             myClosure();
                         };
-                    
+
                     // set everything up and then display modal
                     modal.style.display = "block";
                 }
-            });
+            }); // html2canvas
 
             takePhotoButton.innerHTML = "";
-        }, 5000) // timeout
+        }, 5000) // setTimeout
 
         setTimeout(function() { takePhotoButton.innerHTML = "4"; }, 1000);
         setTimeout(function() { takePhotoButton.innerHTML = "3"; }, 2000);
         setTimeout(function() { takePhotoButton.innerHTML = "2"; }, 3000);
         setTimeout(function() { takePhotoButton.innerHTML = "1"; }, 4000);
-
-
-
-    };
-
-
+    }; // btn.onClick
 </script>

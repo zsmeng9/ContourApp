@@ -202,6 +202,11 @@ def measurements():
     db.session.add(newUserSize)
     db.session.commit()
 
+    # round to the nearest integer
+    profile['NECK Width'] = int(round(profile['NECK Width']))
+    profile['CHEST Width'] = int(round(profile['CHEST Width']))
+    profile['WAIST Width'] = int(round(profile['WAIST Width']))
+
     return render_template('measurements.html', profile=profile)
 
 

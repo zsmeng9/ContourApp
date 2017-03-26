@@ -14,6 +14,17 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  
+    <script>
+        $(document).ready(function(){
+            var username = {{ username|safe }};
+            console.log(username);
+            var acknowledgeText = "Here Are Your Measurements, " + username + ":";
+
+            console.log(acknowledgeText);
+            document.getElementById("measurement-results").innerHTML = acknowledgeText;
+        });
+
+    </script>
 </head>
 
 <body>
@@ -33,7 +44,7 @@
             <h3 class="text-muted">Contour App</h3>
         </div>
 
-        <h3>Here Are Your Measurements, {{ username }} :</h3>
+        <h3 id="measurement-results">Here Are Your Measurements:</h3>
         <table class='table'>
             <thead>
                 <tr>

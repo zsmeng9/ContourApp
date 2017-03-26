@@ -218,11 +218,12 @@ def measurements():
             final_measurements[contour + ' cm'] = int(round(measurement_in_cm))
 
     print (final_measurements)
+    print (request.authorization.username)
 
     return render_template(
         'measurements.html',
         final_measurements=final_measurements,
-        username=request.authorization.username
+        username=json.dumps(request.authorization.username)
         )
 
 

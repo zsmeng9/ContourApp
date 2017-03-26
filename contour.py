@@ -26,9 +26,6 @@ views = ['FRONT', 'SIDE']
 pi = 3.14
 
 
-profile = {}
-deltas = {}
-
 # Create our database model
 class User(db.Model):
     __tablename__ = "users"
@@ -172,6 +169,9 @@ def contourupload():
 @app.route("/measurements")
 @requires_auth
 def measurements():
+    profile = {}
+    deltas = {}
+
     query_string = str(request.query_string.decode("utf-8")).replace("%22", "\"").replace("%20", " ")
     print (query_string)
     deltas = json.loads(query_string)

@@ -261,7 +261,8 @@
     // add timeout delay 
     btn.onclick = function() {
         var takePhotoButton = document.getElementById("countdown");
-        takePhotoButton.innerHTML = "3";
+        // countdown start
+        takePhotoButton.innerHTML = "5";
         setTimeout(function() {
              // add correct sample image to modal
             var modalImageClassName = (viewCount == 0) ? " front-image" : " side-image";
@@ -309,10 +310,13 @@
             });
 
             takePhotoButton.innerHTML = "";
-        }, 3000) // timeout
+        }, 5000) // timeout
 
-        setTimeout(function() { takePhotoButton.innerHTML = "2"; }, 1000);
-        setTimeout(function() { takePhotoButton.innerHTML = "1"; }, 2000);
+        setTimeout(function() { takePhotoButton.innerHTML = "4"; }, 1000);
+        setTimeout(function() { takePhotoButton.innerHTML = "3"; }, 2000);
+        setTimeout(function() { takePhotoButton.innerHTML = "2"; }, 3000);
+        setTimeout(function() { takePhotoButton.innerHTML = "1"; }, 4000);
+
 
 
     };

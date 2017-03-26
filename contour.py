@@ -1,15 +1,13 @@
+from cgi import parse_qs
+from functools import wraps
 import json
 import math
 import os
 
 from flask import Flask, render_template, request, Response
-
-from urlparse import urlparse
-from cgi import parse_qs, escape
-
-from werkzeug.contrib.cache import SimpleCache
 from flask_sqlalchemy import SQLAlchemy
-from functools import wraps
+from werkzeug.contrib.cache import SimpleCache
+
 
 cache = SimpleCache()
 
@@ -26,9 +24,6 @@ views = ['FRONT', 'SIDE']
 pi = 3.14
 
 
-profile = {}
-deltas = {}
-
 # Create our database model
 class User(db.Model):
     __tablename__ = "users"
@@ -39,6 +34,7 @@ class User(db.Model):
     def __init__(self, username, password):
         self.username = username
         self.password = password
+
 
 # Create our database model
 class UserSizes(db.Model):
@@ -66,12 +62,14 @@ def check_auth(username, password):
 
     return False
 
+
 def authenticate():
     """Sends a 401 response that enables basic auth"""
     return Response(
     'Could not verify your access level for that URL.\n'
     'You have to login with proper credentials', 401,
     {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
 
 def requires_auth(f):
     @wraps(f)
@@ -82,14 +80,17 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
+
 @app.route("/")
 def main():
     return render_template('index.html')
+
 
 @app.route("/enterHeight", methods=['POST'])
 def enterHeight():
     cache.set('height', request.form['userHeight'])
     print (cache.get('height'))
+
 
 @app.route("/addUser", methods=['GET'])
 def addUser():
@@ -98,8 +99,7 @@ def addUser():
     username = d.get('username', [''])[0]
     password = d.get('password', [''])[0]
 
-    newUser = User(username = username,
-                    password = password)
+    newUser = User(username=username, password=password)
 
     db.session.add(newUser)
     db.session.commit()
@@ -107,6 +107,7 @@ def addUser():
     return render_template(
         'newuser.html',
         username=json.dumps(username))
+
 
 @app.route("/photos")
 @requires_auth
@@ -117,14 +118,9 @@ def photos():
 
 @app.route("/uploadFront")
 @requires_auth
-#cacheFront
+# cacheFront
 def cacheFront():
     query_string = request.query_string
-    # print ("sup")
-    # f = open("static/front.txt", "wb")
-    # print ("opening file")
-    # f.write(query_string)
-    # f.close()
     cache.set('front', query_string)
 
     return render_template('photos.html')
@@ -132,7 +128,7 @@ def cacheFront():
 
 @app.route("/uploadSide")
 @requires_auth
-#cacheSide
+# cacheSide
 def cacheSide():
     query_string = request.query_string
 
@@ -148,9 +144,7 @@ def cacheSide():
 @app.route("/contouring")
 @requires_auth
 def contouring():
-    #read from cache
-    # fronttxt = open("static/front.txt", "rb").read().decode("utf-8")
-    # sidetxt = open("static/side.txt", "rb").read().decode("utf-8")
+    # read from cache
     fronttxt = cache.get('front').decode("utf-8")
     sidetxt = cache.get('side').decode("utf-8")
 
@@ -161,6 +155,7 @@ def contouring():
         contours=json.dumps(contours), views=json.dumps(views)
     )
 
+
 @app.route("/contourupload")
 @requires_auth
 def contourupload():
@@ -169,9 +164,13 @@ def contourupload():
         contours=json.dumps(contours), views=json.dumps(views)
     )
 
+
 @app.route("/measurements")
 @requires_auth
 def measurements():
+    profile = {}
+    deltas = {}
+
     query_string = str(request.query_string.decode("utf-8")).replace("%22", "\"").replace("%20", " ")
     print (query_string)
     deltas = json.loads(query_string)
@@ -184,6 +183,7 @@ def measurements():
     for contour in contours:
         if contour != 'CARD length':
             deltaTuple = deltas[contour]
+            # raw output in inches
             profile[contour] = algorithm(deltaTuple, pixelsPerInchFront,
                                          pixelsPerInchSide)
     print request.authorization.username
@@ -194,15 +194,35 @@ def measurements():
     chest = profile['CHEST Width']
     waist = profile['WAIST Width']
 
-    newUserSize = UserSizes(user_id = user_id,
-                    neck = neck,
-                    chest = chest,
-                    waist = waist)
+    newUserSize = UserSizes(
+        user_id=user_id,
+        neck=neck,
+        chest=chest,
+        waist=waist)
 
     db.session.add(newUserSize)
     db.session.commit()
 
-    return render_template('measurements.html', profile=profile)
+    final_measurements = {}
+    for contour in contours:
+        if contour != 'CARD length':
+            # raw output in inches, rounded to nearest inch, forcing 2 decimal places even if zeroes
+            final_measurements[contour + ' in'] = format(round(profile[contour], 2), '.2f')
+
+    for contour in contours:
+        if contour != 'CARD length':
+            # convert to CM
+            measurement_in_cm = profile[contour] * 2.54
+            # round to nearest cm and write to dict, forcing 2 decimal places even if zeroes
+            final_measurements[contour + ' cm'] = format(round(measurement_in_cm, 2), '.2f')
+
+    print (final_measurements)
+    print (request.authorization.username)
+
+    return render_template(
+        'measurements.html',
+        final_measurements=final_measurements,
+        username=json.dumps(request.authorization.username))
 
 
 def algorithm(deltaTuple, pixelsPerInchFront, pixelsPerInchSide):

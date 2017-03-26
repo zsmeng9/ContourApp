@@ -14,6 +14,17 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  
+    <script>
+        $(document).ready(function(){
+            var username = {{ username|safe }};
+            console.log(username);
+            var acknowledgeText = "Here Are Your Measurements, " + username + ":";
+
+            console.log(acknowledgeText);
+            document.getElementById("measurement-results").innerHTML = acknowledgeText;
+        });
+
+    </script>
 </head>
 
 <body>
@@ -33,20 +44,30 @@
             <h3 class="text-muted">Contour App</h3>
         </div>
 
-        <h3>Your Measurements</h3>
+        <h3 id="measurement-results">Here Are Your Measurements:</h3>
         <table class='table'>
+            <thead>
+                <tr>
+                    <th>Body Part</th>
+                    <th>Inches</th>
+                    <th>Centimeters</th>
+                </tr>
+
             <tbody>
                 <tr>
                     <th scope="row">Chest</th>
-                    <td>{{ profile['CHEST Width'] }}</td>
+                    <td>{{ final_measurements['CHEST Width in'] }}</td>
+                    <td>{{ final_measurements['CHEST Width cm'] }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Waist</th>
-                    <td>{{ profile['WAIST Width'] }}</td>
+                    <td>{{ final_measurements['WAIST Width in'] }}</td>
+                    <td>{{ final_measurements['WAIST Width cm'] }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Neck</th>
-                    <td>{{ profile['NECK Width'] }}</td>
+                    <td>{{ final_measurements['NECK Width in'] }}</td>
+                    <td>{{ final_measurements['NECK Width cm'] }}</td>
                 </tr>
             </tbody>
         </table>

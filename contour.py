@@ -206,15 +206,15 @@ def measurements():
     final_measurements = {}
     for contour in contours:
         if contour != 'CARD length':
-            # raw output in inches, rounded to nearest inch
-            final_measurements[contour + ' in'] = int(round(profile[contour]))
+            # raw output in inches, rounded to nearest inch, forcing 2 decimal places even if zeroes
+            final_measurements[contour + ' in'] = format(round(profile[contour], 2), '.2f')
 
     for contour in contours:
         if contour != 'CARD length':
             # convert to CM
             measurement_in_cm = profile[contour] * 2.54
-            # round to nearest cm and write to dict
-            final_measurements[contour + ' cm'] = int(round(measurement_in_cm))
+            # round to nearest cm and write to dict, forcing 2 decimal places even if zeroes
+            final_measurements[contour + ' cm'] = format(round(measurement_in_cm, 2), '.2f')
 
     print (final_measurements)
     print (request.authorization.username)

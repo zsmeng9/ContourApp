@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/introjs.min.css">
     <link rel="stylesheet" href="/static/css/main.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -14,6 +15,7 @@
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type='text/javascript' src='/static/js/intro.min.js'></script>
 
     <script type="text/javascript">
         // counter to track number of contours per view
@@ -184,6 +186,8 @@
             });
         });
 
+
+
         function contourBack() {
             if (contourCount == 0 && viewCount == 0) {
                 window.location.href='/photos';
@@ -263,5 +267,33 @@
 
     </div>
 </body>
+
+<script>
+    // Walkthrough part 1
+    var intro = introJs();
+    intro.setOptions({
+        steps: [
+            { 
+                intro: "You look great! Time to define your Contour and grab your measurements!"
+            },
+            {
+                element: '#testimg',
+                intro: "Click twice on this image (after finishing this walkthrough) to define two Contour Points that outline the body part you are trying to measure, or well in this first case, the credit card.",
+                position: 'top'
+            },
+            {
+                element: '#sample-image',
+                intro: "Line the tip of the pointer to the edges of the body part, or again in this case, the credit card, just like in this example photo.",
+                position: 'top'
+            },
+            {
+                element: '#snap',
+                intro: 'The next button will appear here once you have added the two Contour points! Let\'s quickly do this 7 more times and we\'ll be all done!',
+                position: 'top'
+            },
+        ]
+    });
+    intro.start();
+</script>
 
 </html>

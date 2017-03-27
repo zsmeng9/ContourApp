@@ -37,6 +37,10 @@ body {
 	float: left;
 }
 
+#intro-video-iframe {
+	float: right;
+}
+
 #tutorial-video {
 	float: right;
 }

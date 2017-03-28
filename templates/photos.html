@@ -176,6 +176,7 @@
 
     function uploadPhoto(canvas) {
         if (viewCount == 0) {
+            document.getElementById("snap").disabled = false;
             // update progress bar
             document.getElementById("progress-bar").innerHTML = "2 / 2";
 

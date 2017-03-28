@@ -54,19 +54,23 @@ if (pg_num_rows($result) == 0) {
 
 	if (in_array ($storename, $storenamearray)) {
 		echo "<h2>Welcome " . $_POST["username"] . "</h2>
-		<h3>Enjoy shopping with confidence at " . $storename . "</h3><br>
-		<li>Neck :" . $user_size[0]["neck"] . " Recommended Size: " . $neck_sizing[0]["size"] . "</li>
-		<li>Chest :" . $user_size[0]["chest"] . " Recommended Size: " . $chest_sizing[0]["size"] . "</li>
-		<li>Waist :" . $user_size[0]["waist"] . " Recommended Size: " . $waist_sizing[0]["size"] . "</li>
-		<h3>Contour Customer Fit Reviews</h3>
+		<p>Enjoy shopping with confidence at " . $storename . "</p>
+		<table class='table'>
+		<tbody>
+		<tr><td>Neck: " . round($user_size[0]["neck"],1) . " Recommended Size: " . $neck_sizing[0]["size"] . "</td></tr>
+		<tr><td>Chest: " . round($user_size[0]["chest"],1) . " Recommended Size: " . $chest_sizing[0]["size"] . "</td></tr>
+		<tr><td>Waist: " . round($user_size[0]["waist"],1) . " Recommended Size: " . $waist_sizing[0]["size"] . "</td></tr>
+		</tbody>
+		</table>
+		<h3>Customer Fit Reviews</h3>
 		<input type='hidden' id='user_id' value=" . $user_id . ">
 		<input type='hidden' id='store_id' value=" . $store_id . ">
 		<input type='text' id='size_bought' placeholder='Size Bought'><br>
 		<input type='text' id='fit_preference' placeholder='Fit Preference'><br>
 		<input type='text' id='bought_fit_rating' placeholder='Rating'><br>
 		<input type='text' id='comments' placeholder='Comments'><br>
-		<button id='submit_review'>Submit Review</button>
-		<button id='view_reviews'>View Reviews (" . $review_count . ")</button>";
+		<button class='button' id='submit_review'>Submit Review</button>
+		<button class='button' id='view_reviews'>View Reviews (" . $review_count . ")</button>";
 	}
 }
 ?>

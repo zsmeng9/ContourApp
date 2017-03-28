@@ -25,18 +25,25 @@
       margin: 5px auto;
     }
     body {
-      min-width:200px;
+      min-width:350px;
+    }
+    .button {
+      margin: auto;
+      margin-bottom: 5px;
     }
     </style>
   </head>
   <script src="jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
   <body>
-    <div id="content">
+    <div id="content" class="wrapper" style="text-align:center">
     <h3> Sign In to your Contour Account </h3>
       <input type="text" id="username" placeholder="Username"><br>
       <input type="password" id="password" placeholder="Password"><br>
     </div>
-      <button id="login">Login</button>
+    <div style="text-align:center">
+      <button class="button" id="login">Login</button>
+    </div>
     <div id="review_content">
     </div>
     <script src="popup.js"></script>

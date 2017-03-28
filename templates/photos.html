@@ -217,7 +217,6 @@
 
         }
         if (viewCount == 1) {
-            document.getElementById("snap").disabled = true
             document.getElementById("snap").innerHTML = "LOADING..."
             var data = canvas.toDataURL('image/png', 0.0);
             // AJAX call to send `data` to a PHP file that creates an image from the dataURI string and saves it to a directory on the server
@@ -251,6 +250,7 @@
     // When the user clicks on the button, open the modal
     // add timeout delay
     btn.onclick = function() {
+        document.getElementById("snap").disabled = true;
         var takePhotoButton = document.getElementById("countdown");
         // countdown start
         takePhotoButton.innerHTML = "5";
@@ -276,7 +276,7 @@
 */
                             //imageContainer.parentNode.removeChild(imageContainer);
                             previewImage.removeChild(previewImage.childNodes[1]);
-
+                            document.getElementById("snap").disabled = false;
                             // do nothing and close the modal
                             modal.style.display = "none";
                         };
